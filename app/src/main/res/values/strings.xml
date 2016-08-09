@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">TurnosDIM</string>
+    <string name="app_name">DIM Turnos</string>
+    <string name="loginEmail">mail@ejemplo.com</string>
+    <string name="loginPass">Contraseña</string>
+    <string name="loginBtn">Iniciar Sesión</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
