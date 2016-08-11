@@ -1,8 +1,11 @@
 package mobile.mads.turnosdim;
 
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +15,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import layout.LocationsFragment;
+import layout.MainFragment;
+import layout.ResultsFragment;
+import layout.TurnosFragment;
+import layout.UserSettingsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Variables
+    private Fragment selectedFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +54,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        selectedFragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction()
+             .replace(R.id.content_main, selectedFragment).commit();
+
     }
 
     @Override
@@ -81,15 +100,37 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_turnos) {
-            // Handle the camera action
-        } else if (id == R.id.nav_exams) {
+           // Carga el fragment de Nuevos Turnos
+            selectedFragment = new TurnosFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, selectedFragment).commit();
 
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_exams) {
+            // Carga el fragment de envío de exámenes médicos
+            selectedFragment = new ResultsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, selectedFragment).commit();
+
 
         } else if (id == R.id.nav_locations) {
+            // Carga el fragment de centros de atención
+            selectedFragment = new LocationsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, selectedFragment).commit();
+
+        } else if (id == R.id.nav_settings) {
+            // Carga el fragment de configuraciones de usuario
+            selectedFragment = new UserSettingsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, selectedFragment).commit();
+
+
 
         } else if (id == R.id.nav_endSession) {
-
+            // Cierra sesión
+            Intent i = new Intent(this.getApplicationContext(),EntryActivity.class);
+            startActivity(i);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

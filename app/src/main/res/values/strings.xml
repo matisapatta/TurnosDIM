@@ -13,4 +13,7 @@
     <string name="navUserOpt">Opciones de Usuario</string>
     <string name="navEndSession">Cerrar Sesión</string>
     <string name="navLocations">Centros de Atención</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
