@@ -10,17 +10,31 @@
 
 
     <TextView
-        android:text="Fragment Turnos"
+        android:text="@string/selectEspecialidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:layout_marginTop="48dp"
-        app:layout_constraintTop_toTopOf="@+id/fragmentTurnos"
-        android:layout_marginStart="48dp"
-        app:layout_constraintLeft_toLeftOf="@+id/fragmentTurnos"
-        android:layout_marginLeft="48dp"
+        android:id="@+id/selectEspecText"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="@+id/fragmentTurnos"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.4" />
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentTurnos"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="@+id/fragmentTurnos" />
+
+    <Spinner
+        android:layout_width="306dp"
+        android:layout_height="23dp"
+        android:id="@+id/spinnerEspecialidades"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/selectEspecText"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/fragmentTurnos"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentTurnos"
+        android:layout_marginLeft="16dp" />
+
+
 </android.support.constraint.ConstraintLayout>
