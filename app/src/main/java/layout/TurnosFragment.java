@@ -4,11 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+import android.os.AsyncTask;
 
 import mobile.mads.turnosdim.R;
 
@@ -71,12 +76,15 @@ public class TurnosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_turnos, container, false);
         spinnerEspecialidad = (Spinner)view.findViewById(R.id.spinnerEspecialidades);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.especialidadesArray, android.R.layout.simple_spinner_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+        //        R.array.especialidadesArray, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinnerEspecialidad.setAdapter(adapter);
+
+        new HttpRequestTask().execute();
+
+        //spinnerEspecialidad.setAdapter(adapter);
 
 
         return view;
@@ -119,5 +127,32 @@ public class TurnosFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class HttpRequestTask extends AsyncTask <Void , Void, ArrayAdapter>  {
+        @Override
+        protected ArrayAdapter doInBackground(Void... params) {
+            try {
+                final String url = "http://matisapatta.16mb.com/TurnosDIM/especialidades.json";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                ArrayAdapter adapter = restTemplate.getForObject(url, ArrayAdapter.class);
+                return adapter;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayAdapter adapter) {
+            Spinner spinner=(Spinner)getView().findViewById(R.id.spinnerEspecialidades);
+            spinner.setAdapter(adapter);
+
+
+        }
     }
 }
