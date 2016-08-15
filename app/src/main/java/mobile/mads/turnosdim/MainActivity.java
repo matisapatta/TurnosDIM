@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import layout.LocationsFragment;
 import layout.MainFragment;
@@ -28,6 +27,8 @@ public class MainActivity extends AppCompatActivity
 
     // Variables
     private Fragment selectedFragment;
+    private boolean isDrawerLocked = false;
+
 
 
     @Override
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         selectedFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
              .replace(R.id.content_main, selectedFragment).commit();
+
 
     }
 
