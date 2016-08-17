@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DIM Turnos</string>
-    <string name="loginEmail">mail@ejemplo.com</string>
+    <string name="loginDNI">DNI Paciente</string>
     <string name="loginPass">Contraseña</string>
     <string name="loginBtn">Iniciar Sesión</string>
     <string name="title_activity_main">Bienvenidos</string>
