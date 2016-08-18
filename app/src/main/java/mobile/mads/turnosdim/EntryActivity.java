@@ -1,5 +1,6 @@
 package mobile.mads.turnosdim;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class EntryActivity extends AppCompatActivity {
     private EditText passTxt;
     private String url;
     private Paciente paciente;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class EntryActivity extends AppCompatActivity {
         loginBtn=(Button)findViewById(R.id.loginBtn);
         dniTxt=(EditText)findViewById(R.id.loginDNI);
         passTxt=(EditText)findViewById(R.id.loginPassword);
+
     }
 
     @Override
@@ -52,7 +55,14 @@ public class EntryActivity extends AppCompatActivity {
     }
 
     public class HttpRequestTask extends AsyncTask<Void , Void, String> {
-
+        //Before running code in separate thread
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(EntryActivity.this);
+            progressDialog.setMessage(getApplicationContext().getResources().getString(R.string.auth));
+            progressDialog.show();
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -62,10 +72,20 @@ public class EntryActivity extends AppCompatActivity {
 
                 // Make WS Call
                 String jsonData = sh.doGetRequest(url);
+
                 if(jsonData!=null){
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            paciente.setIdpaciente(jsonObject.getString(JSONConstants.JSON_IDPACIENTE));
+                            paciente.setNombre(jsonObject.getString(JSONConstants.JSON_NOMBRE));
+                            paciente.setTokenPaciente(jsonObject.getString(JSONConstants.JSON_TOKEN));
+                            return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -73,11 +93,7 @@ public class EntryActivity extends AppCompatActivity {
                 } else {
                     Log.e("ServiceHandler", "Couldn't get any data from the url");
                 }
-                if(success.equals("1")){
-                    return success;
-                } else {
-                    return null;
-                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -87,17 +103,20 @@ public class EntryActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String success) {
+        protected void onPostExecute(String string) {
             if(success!=null) {
                 if(success.equals("1")){
                     Intent intent = new Intent(EntryActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
+                    progressDialog.dismiss();
+                } else {
+                    Toast.makeText(getApplicationContext(), string,Toast.LENGTH_LONG).show();
+                    dniTxt.setText("");
+                    passTxt.setText("");
                 }
             } else {
-                Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
-                dniTxt.setText("");
-                passTxt.setText("");
+                Toast.makeText(getApplicationContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
             }
         }
 

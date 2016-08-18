@@ -5,13 +5,13 @@ package mobile.mads.turnosdim;
  */
 
 public class Paciente {
-    private String success;
+
     private String idpaciente;
     private String TokenPaciente;
     private String nombre;
 
-    public void Paciente(String  success, String idpaciente, String token, String nombre){
-        this.success = success;
+    public void Paciente(String idpaciente, String token, String nombre){
+
         this.idpaciente = idpaciente;
         this.TokenPaciente = token;
         this.nombre = nombre;
@@ -29,13 +29,6 @@ public class Paciente {
         return TokenPaciente;
     }
 
-    public String getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(String success) {
-        this.success = success;
-    }
 
     public void setIdpaciente(String idpaciente) {
         this.idpaciente = idpaciente;
