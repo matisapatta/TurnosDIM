@@ -12,8 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import mobile.mads.turnosdim.WSConstants;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+
 import android.os.AsyncTask;
 
 import mobile.mads.turnosdim.Paciente;

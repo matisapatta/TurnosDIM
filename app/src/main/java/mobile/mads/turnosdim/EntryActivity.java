@@ -8,15 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.Toast;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 
 public class EntryActivity extends AppCompatActivity {
 
     private Button loginBtn;
-    private Paciente paciente;
+    private String success;
     private EditText dniTxt;
     private EditText passTxt;
     private String url;
@@ -33,6 +37,7 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -45,18 +50,34 @@ public class EntryActivity extends AppCompatActivity {
         });
     }
 
-    public class HttpRequestTask extends AsyncTask<Void , Void, Paciente> {
+    public class HttpRequestTask extends AsyncTask<Void , Void, String> {
 
 
         @Override
-        protected Paciente doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
+
             try {
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                paciente = restTemplate.getForObject(url, Paciente.class);
-                return paciente;
-            } catch (Exception e) {
-                Log.e("MainActivity", e.getMessage(), e);
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.makeCall(url);
+                if(jsonData!=null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        success = jsonObject.getString("success");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+                if(success.equals("1")){
+                    return success;
+                } else {
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
 
@@ -64,13 +85,18 @@ public class EntryActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Paciente paciente) {
-            if(paciente.getSuccess().equals("1")){
-                Intent intent = new Intent(EntryActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+        protected void onPostExecute(String success) {
+            if(success!=null) {
+                if(success.equals("1")){
+                    Intent intent = new Intent(EntryActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
             }
-
         }
+
     }
 }
+
