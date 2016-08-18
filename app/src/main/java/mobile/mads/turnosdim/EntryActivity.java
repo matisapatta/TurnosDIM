@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import database.DBManager;
+
 
 public class EntryActivity extends AppCompatActivity {
 
@@ -26,15 +28,28 @@ public class EntryActivity extends AppCompatActivity {
     private EditText passTxt;
     private String url;
     private Paciente paciente;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
+    private DBManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
+
+        // Asocio vistas a variables
         loginBtn=(Button)findViewById(R.id.loginBtn);
         dniTxt=(EditText)findViewById(R.id.loginDNI);
         passTxt=(EditText)findViewById(R.id.loginPassword);
+
+        // Inicializo la DB
+        db = new DBManager(getApplicationContext());
+
+        if(db.getPaciente(getApplicationContext())!=null){
+            db.close();
+            Intent intent = new Intent(EntryActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
     }
 
@@ -81,6 +96,7 @@ public class EntryActivity extends AppCompatActivity {
                             paciente.setIdpaciente(jsonObject.getString(JSONConstants.JSON_IDPACIENTE));
                             paciente.setNombre(jsonObject.getString(JSONConstants.JSON_NOMBRE));
                             paciente.setTokenPaciente(jsonObject.getString(JSONConstants.JSON_TOKEN));
+                            db.newEntry(paciente);
                             return success;
                         } else  {
                             return jsonObject.getString(JSONConstants.JSON_MENSAJE);
@@ -104,13 +120,15 @@ public class EntryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String string) {
+            progressDialog.dismiss();
             if(success!=null) {
                 if(success.equals("1")){
                     Intent intent = new Intent(EntryActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                    progressDialog.dismiss();
+
                 } else {
+
                     Toast.makeText(getApplicationContext(), string,Toast.LENGTH_LONG).show();
                     dniTxt.setText("");
                     passTxt.setText("");
@@ -118,6 +136,7 @@ public class EntryActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
             }
+            db.close();
         }
 
     }
