@@ -24,6 +24,7 @@ public class EntryActivity extends AppCompatActivity {
     private EditText dniTxt;
     private EditText passTxt;
     private String url;
+    private Paciente paciente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +38,13 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-
+        paciente = new Paciente();
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                url = WSConstants.StringConstants.wsUrl+WSConstants.StringConstants.wsComandoLogin+
-                        WSConstants.StringConstants.wsDni+dniTxt.getText()+WSConstants.StringConstants.wsPass+
-                        passTxt.getText()+WSConstants.StringConstants.wsFormato;
+                url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_LOGIN+
+                        WSConstants.StringConstants.WS_DNI+dniTxt.getText()+WSConstants.StringConstants.WS_PASS+
+                        passTxt.getText()+WSConstants.StringConstants.WS_FORMATO;
                 new HttpRequestTask().execute();
 
             }
@@ -60,11 +61,12 @@ public class EntryActivity extends AppCompatActivity {
                 ServiceHandler sh = new ServiceHandler();
 
                 // Make WS Call
-                String jsonData = sh.makeCall(url);
+                String jsonData = sh.doGetRequest(url);
                 if(jsonData!=null){
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
-                        success = jsonObject.getString("success");
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -94,6 +96,8 @@ public class EntryActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
+                dniTxt.setText("");
+                passTxt.setText("");
             }
         }
 
