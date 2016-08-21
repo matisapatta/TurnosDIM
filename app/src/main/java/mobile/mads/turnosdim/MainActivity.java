@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
              .replace(R.id.content_main, selectedFragment).commit();
 
-        db = new DBManager(this);
+
 
     }
 
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_endSession) {
             // Cierra sesión
+            db = new DBManager(this);
             db.deleteAll();
             db.close();
             Intent i = new Intent(this.getApplicationContext(),EntryActivity.class);
