@@ -1,0 +1,7 @@
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/background_main_frag"
+    android:tileMode="disabled"
+    android:gravity="fill_vertical"
+    android:dither="true"
+    android:filter="true">
+</bitmap>

@@ -1,0 +1,7 @@
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/background_login_3"
+    android:tileMode="disabled"
+    android:gravity="center"
+    android:dither="true"
+    android:filter="true">
+</bitmap>

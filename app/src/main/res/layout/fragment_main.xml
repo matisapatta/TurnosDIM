@@ -4,7 +4,8 @@
     android:id="@+id/fragmentMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.MainFragment">
+    tools:context="layout.MainFragment"
+    android:background="@drawable/background_mainfrag">
 
     <!-- TODO: Update blank fragment layout -->
 
