@@ -33,7 +33,6 @@ public class NuevoTurnoFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private Spinner spinnerEspecialidad;
     private DBManager db;
 
     public NuevoTurnoFragment() {
@@ -72,15 +71,7 @@ public class NuevoTurnoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nuevo_turno, container, false);
-        spinnerEspecialidad = (Spinner)view.findViewById(R.id.spinnerEspecialidades);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.especialidadesArray, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
 
-
-        //spinnerEspecialidad.setAdapter(adapter);
 
         return view;
     }

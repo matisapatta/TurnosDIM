@@ -30,6 +30,7 @@ public class EntryActivity extends AppCompatActivity {
     private Paciente paciente;
     private ProgressDialog progressDialog;
     private DBManager db;
+    private String dni;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class EntryActivity extends AppCompatActivity {
                 url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_LOGIN+
                         WSConstants.StringConstants.WS_DNI+dniTxt.getText()+WSConstants.StringConstants.WS_PASS+
                         passTxt.getText()+WSConstants.StringConstants.WS_FORMATO;
+                dni = dniTxt.getText().toString();
                 new HttpRequestTask().execute();
 
             }
@@ -96,6 +98,7 @@ public class EntryActivity extends AppCompatActivity {
                             paciente.setIdpaciente(jsonObject.getString(JSONConstants.JSON_IDPACIENTE));
                             paciente.setNombre(jsonObject.getString(JSONConstants.JSON_NOMBRE));
                             paciente.setTokenPaciente(jsonObject.getString(JSONConstants.JSON_TOKEN));
+                            paciente.setDni(dni);
                             db.newEntry(paciente);
                             return success;
                         } else  {

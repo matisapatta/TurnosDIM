@@ -21,7 +21,7 @@ public class ServiceHandler {
     }
     OkHttpClient client = new OkHttpClient();
 
-    String doGetRequest(String url) throws IOException {
+    public String doGetRequest(String url) throws IOException {
 
 
             Request request = new Request.Builder()
@@ -41,7 +41,7 @@ public class ServiceHandler {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    String doPostRequest(String url, String json) throws IOException {
+    public String doPostRequest(String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)

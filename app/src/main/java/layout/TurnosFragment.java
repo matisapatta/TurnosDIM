@@ -1,22 +1,41 @@
 package layout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import mobile.mads.turnosdim.WSConstants;
+
+import database.DBManager;
+import mobile.mads.turnosdim.EntryActivity;
+import mobile.mads.turnosdim.JSONConstants;
+import mobile.mads.turnosdim.MainActivity;
+import mobile.mads.turnosdim.Paciente;
+import mobile.mads.turnosdim.ServiceHandler;
+import mobile.mads.turnosdim.TurnosAdapter;
+import mobile.mads.turnosdim.TurnosStruct;
+
 
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
-import mobile.mads.turnosdim.Paciente;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import mobile.mads.turnosdim.R;
+import mobile.mads.turnosdim.WSConstants;
 
 
 /**
@@ -32,7 +51,14 @@ public class TurnosFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private Spinner spinnerEspecialidad;
+    private TurnosStruct turnos;
+    private ArrayList<TurnosStruct> datosTurno;
+    private RecyclerView recView;
+    private String url;
+    private DBManager db;
+    private int listIndex = 0;
+    private String success;
+    private Paciente paciente;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,8 +92,10 @@ public class TurnosFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
 
     }
 
@@ -76,16 +104,10 @@ public class TurnosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_turnos, container, false);
-        spinnerEspecialidad = (Spinner)view.findViewById(R.id.spinnerEspecialidades);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-              R.array.especialidadesArray, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+
+        // Datos de test
 
 
-
-        spinnerEspecialidad.setAdapter(adapter);
 
 
         return view;
@@ -115,6 +137,22 @@ public class TurnosFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        db = new DBManager(getContext());
+        paciente = db.getPaciente(getContext());
+        datosTurno = new ArrayList<TurnosStruct>();
+        //turnos = new TurnosStruct();
+
+        url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISTURNOS+WSConstants.StringConstants.WS_ID_PACIENTE+
+            paciente.getIdpaciente()+WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+WSConstants.StringConstants.WS_FORMATO;
+        recView = (RecyclerView)getActivity().findViewById(R.id.turnosRecView);
+
+        recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        new HttpRequestTask().execute();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -130,5 +168,92 @@ public class TurnosFragment extends Fragment {
         void onFragmentInteraction();
     }
 
+    public class HttpRequestTask extends AsyncTask<Void , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.auth));
+            progressDialog.show();
+        }
 
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(url);
+
+                if(jsonData!=null){
+                    try {
+                        // Manejo de Array en JSON
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        JSONObject json_data;
+
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            JSONArray jArray = jsonObject.getJSONArray("Turnos");
+                                for(int i=0;i<jArray.length();i++){
+                                    json_data = jArray.getJSONObject(i);
+                                    turnos = new TurnosStruct();
+                                    turnos.setMedico(json_data.getString(JSONConstants.JSON_MEDICO));
+                                    turnos.setEspecialidad(json_data.getString(JSONConstants.JSON_ESPECIALIDAD));
+                                    turnos.setFechaTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+                                    datosTurno.add(turnos);
+                                    listIndex++;
+                                }
+
+                                return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+            if(success!=null) {
+                if(success.equals("1")){
+                    // Set adapter
+                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    recView.setAdapter(adapter);
+
+                } else {
+
+                    Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
+                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    recView.setAdapter(adapter);
+
+                }
+            } else {
+                Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
+            }
+            db.close();
+        }
+
+    }
 }
+
+
+
+

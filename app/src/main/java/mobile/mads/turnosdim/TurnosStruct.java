@@ -9,7 +9,7 @@ import java.util.Date;
 public class TurnosStruct {
 
     private long idTurno;
-    private Date fechaTurno;
+    private String fechaTurno;
     private String horaTurno;
     private String medico;
     private String especialidad;
@@ -24,7 +24,7 @@ public class TurnosStruct {
 
     }
 
-    public TurnosStruct(long idTurno, Date fechaTurno, String horaTurno, String medico, String especialidad,
+    public TurnosStruct(long idTurno, String fechaTurno, String horaTurno, String medico, String especialidad,
         String centro, String consultorio, String cobertura, String preparacion, boolean esConsulta, ObjectStruct practicas){
 
         this.idTurno = idTurno;
@@ -44,7 +44,7 @@ public class TurnosStruct {
         return idTurno;
     }
 
-    public Date getFechaTurno() {
+    public String getFechaTurno() {
         return fechaTurno;
     }
 
@@ -88,7 +88,7 @@ public class TurnosStruct {
         this.idTurno = idTurno;
     }
 
-    public void setFechaTurno(Date fechaTurno) {
+    public void setFechaTurno(String fechaTurno) {
         this.fechaTurno = fechaTurno;
     }
 

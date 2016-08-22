@@ -21,7 +21,7 @@ public class Paciente {
 
     }
 
-    public Paciente(int id, String idpaciente, String token, String nombre, String dni){
+    public Paciente(int id, String idpaciente, String dni, String nombre, String token){
 
         this.id = id;
         this.idpaciente = idpaciente;

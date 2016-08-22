@@ -15,6 +15,7 @@ public class WSConstants {
 
         public static final String WS_URL = "http://portalweb.dim.com.ar:8091/global.ashx?";
         public static final String WS_COMANDO_LOGIN = "comando=demo_login";
+        public static final String WS_COMANDO_MISTURNOS = "comando=demo_mis_turnos";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
         public static final String WS_PASS = "&pass=";
