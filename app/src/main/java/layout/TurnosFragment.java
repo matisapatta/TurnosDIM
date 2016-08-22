@@ -144,13 +144,19 @@ public class TurnosFragment extends Fragment {
         paciente = db.getPaciente(getContext());
         datosTurno = new ArrayList<TurnosStruct>();
         //turnos = new TurnosStruct();
-
+        if(paciente!=null)
         url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISTURNOS+WSConstants.StringConstants.WS_ID_PACIENTE+
             paciente.getIdpaciente()+WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+WSConstants.StringConstants.WS_FORMATO;
+
         recView = (RecyclerView)getActivity().findViewById(R.id.turnosRecView);
 
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         new HttpRequestTask().execute();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        db.close();
     }
 
     /**
