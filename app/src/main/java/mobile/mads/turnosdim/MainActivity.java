@@ -19,17 +19,23 @@ import android.view.MenuItem;
 import database.DBManager;
 import layout.LocationsFragment;
 import layout.MainFragment;
-import layout.ResultsFragment;
+import layout.NuevoTurnoFragment;
 import layout.TurnosFragment;
 import layout.UserSettingsFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener,
+        LocationsFragment.OnFragmentInteractionListener,
+        NuevoTurnoFragment.OnFragmentInteractionListener,
+        TurnosFragment.OnFragmentInteractionListener,
+        UserSettingsFragment.OnFragmentInteractionListener {
 
     // Variables
-    private Fragment selectedFragment;
+    private Fragment selectedFragment = null;
+    private Class fragmentClass;
     private boolean isDrawerLocked = false;
     private DBManager db;
+    private DrawerLayout mDrawer;
+    private NavigationView nvDrawer;
 
 
     @Override
@@ -47,15 +53,15 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        nvDrawer = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+        setupDrawerContent(nvDrawer);
         selectedFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
              .replace(R.id.content_main, selectedFragment).commit();
@@ -66,9 +72,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -97,8 +103,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    /*public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -110,7 +126,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_exams) {
             // Carga el fragment de envío de exámenes médicos
-            selectedFragment = new ResultsFragment();
+            selectedFragment = new NuevoTurnoFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_main, selectedFragment).commit();
 
@@ -142,7 +158,63 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }*/
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        int id = menuItem.getItemId();
+        switch(id) {
+            case R.id.nav_turnos:
+                // Carga el fragment de mis turnos
+                fragmentClass = TurnosFragment.class;
+                break;
+            case R.id.nav_exams:
+                //Carga el fragment de nuevos turnos
+                fragmentClass = NuevoTurnoFragment.class;
+                break;
+            case R.id.nav_locations:
+                // Carga el fragment de centros de atención
+                fragmentClass = LocationsFragment.class;
+                break;
+            case R.id.nav_settings:
+                // Carga el fragment de configuraciones de usuario
+                fragmentClass = UserSettingsFragment.class;
+                break;
+            case R.id.nav_endSession:
+                db = new DBManager(this);
+                db.deleteAll();
+                db.close();
+                Intent i = new Intent(this.getApplicationContext(),EntryActivity.class);
+                startActivity(i);
+                finish();
+                break;
+            default:
+                fragmentClass = MainFragment.class;
+        }
+
+        try {
+            selectedFragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, selectedFragment).commit();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawer(GravityCompat.START);
+        //mDrawer.closeDrawers();
+
     }
+    @Override
+    public void onFragmentInteraction(){
+
+    }
+
 
 }
 

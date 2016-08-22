@@ -7,18 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
+import database.DBManager;
 import mobile.mads.turnosdim.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ResultsFragment.OnFragmentInteractionListener} interface
+ * {@link NuevoTurnoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ResultsFragment#newInstance} factory method to
+ * Use the {@link NuevoTurnoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ResultsFragment extends Fragment {
+public class NuevoTurnoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +33,10 @@ public class ResultsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ResultsFragment() {
+    private Spinner spinnerEspecialidad;
+    private DBManager db;
+
+    public NuevoTurnoFragment() {
         // Required empty public constructor
     }
 
@@ -38,16 +44,15 @@ public class ResultsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ResultsFragment.
+
+     * @return A new instance of fragment NuevoTurnoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ResultsFragment newInstance(String param1, String param2) {
-        ResultsFragment fragment = new ResultsFragment();
+    public static NuevoTurnoFragment newInstance() {
+        NuevoTurnoFragment fragment = new NuevoTurnoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,19 +64,37 @@ public class ResultsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        db = new DBManager(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_results, container, false);
+        View view = inflater.inflate(R.layout.fragment_nuevo_turno, container, false);
+        spinnerEspecialidad = (Spinner)view.findViewById(R.id.spinnerEspecialidades);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.especialidadesArray, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+
+
+        //spinnerEspecialidad.setAdapter(adapter);
+
+        return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction();
         }
     }
 
@@ -90,6 +113,7 @@ public class ResultsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        db.close();
     }
 
     /**
@@ -104,6 +128,6 @@ public class ResultsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction();
     }
 }
