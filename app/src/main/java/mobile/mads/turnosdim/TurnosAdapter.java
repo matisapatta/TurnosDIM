@@ -1,6 +1,8 @@
 package mobile.mads.turnosdim;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
     private ArrayList<TurnosStruct> datos;
 
+
     public TurnosAdapter(ArrayList<TurnosStruct> datos) {
         this.datos = datos;
     }
@@ -29,8 +32,14 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
                 .inflate(R.layout.turnos_layout, viewGroup, false);
 
         TurnosViewHolder tvh = new TurnosViewHolder(itemView, new TurnosAdapter.IMyViewHolderClicks(){
-                public void onLineClick(View v, String s){
+                public void onLineClick(View v, String s, int i){
                     Toast.makeText(v.getContext(), s, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(v.getContext(), DetalleTurno.class);
+                    Bundle b = new Bundle();
+                    b.putString("IDTURNO",datos.get(i).getIdTurno());
+                    intent.putExtras(b);
+                    v.getContext().startActivity(intent);
                 }
         });
 
@@ -67,6 +76,7 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
         }
 
         public void bindTurno(TurnosStruct t) {
+
             txtMedico.setText(t.getMedico());
             txtEspecialidad.setText(t.getEspecialidad());
             txtFecha.setText(t.getFechaTurno());
@@ -74,13 +84,13 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
         @Override
         public void onClick(View v){
-            mListener.onLineClick(v, txtMedico.getText().toString());
+            mListener.onLineClick(v, txtMedico.getText().toString(), getAdapterPosition());
         }
 
     }
 
     public interface IMyViewHolderClicks {
-        public void onLineClick(View v, String s);
+        public void onLineClick(View v, String s, int i);
     }
 
 }

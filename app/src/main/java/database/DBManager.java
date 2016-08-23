@@ -128,8 +128,18 @@ public class DBManager extends Observable {
     public void deleteAll(){
         SQLiteDatabase db = b.getWritableDatabase();
         db.delete(DBLayout.DBConstants.USER_TABLE, null, null);
+        db.delete(DBLayout.DBConstants.TURNOS_TABLE, null, null);
         setChanged();
         notifyObservers();
+    }
+
+    public void deleteTurnos(){
+
+        SQLiteDatabase db = b.getWritableDatabase();
+        db.delete(DBLayout.DBConstants.TURNOS_TABLE, null, null);
+        setChanged();
+        notifyObservers();
+
     }
 
 

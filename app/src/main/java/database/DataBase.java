@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBase extends SQLiteOpenHelper {
     public DataBase(Context context) {
-        super(context, DBLayout.DBConstants.DB, null, DBLayout.DBConstants.CURRENT_VERSION);
+        super(context, DBLayout.DBConstants.DB, null, 2);
     }
 
     @Override

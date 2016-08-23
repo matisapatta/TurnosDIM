@@ -16,6 +16,17 @@
     <string name="selectEspecialidad">Seleccione la especialidad:</string>
     <string name="auth">Autenticando...</string>
     <string name="loading">Cargando datos...</string>
+    <string name="medico">Médico:</string>
+    <string name="especialidad">Especialidad:</string>
+    <string name="fechahora">Fecha y hora:</string>
+    <string name="centro">Centro:</string>
+    <string name="consultorio">Consultorio:</string>
+    <string name="cobertura">Cobertura:</string>
+    <string name="preparacion">Preparación:</string>
+    <string name="practicas">Prácticas:</string>
+    <string name="cancel">Cancelar Turno</string>
+    <string name="addtocalendar">Agregar a calendario</string>
+    
     <string-array name="especialidadesArray">
         <item>Clínica Médica</item>
         <item>Dermatología</item>

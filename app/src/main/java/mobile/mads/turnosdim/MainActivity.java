@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         selectedFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
              .replace(R.id.content_main, selectedFragment).commit();
+        db = new DBManager(this);
 
 
 
@@ -114,52 +115,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 });
     }
 
-    /*public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_turnos) {
-           // Carga el fragment de Nuevos Turnos
-            selectedFragment = new TurnosFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_main, selectedFragment).commit();
-
-        } else if (id == R.id.nav_exams) {
-            // Carga el fragment de envío de exámenes médicos
-            selectedFragment = new NuevoTurnoFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_main, selectedFragment).commit();
-
-
-        } else if (id == R.id.nav_locations) {
-            // Carga el fragment de centros de atención
-            selectedFragment = new LocationsFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_main, selectedFragment).commit();
-
-        } else if (id == R.id.nav_settings) {
-            // Carga el fragment de configuraciones de usuario
-            selectedFragment = new UserSettingsFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_main, selectedFragment).commit();
-
-
-
-        } else if (id == R.id.nav_endSession) {
-            // Cierra sesión
-            db = new DBManager(this);
-            db.deleteAll();
-            db.close();
-            Intent i = new Intent(this.getApplicationContext(),EntryActivity.class);
-            startActivity(i);
-            finish();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
-
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         int id = menuItem.getItemId();
@@ -181,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 fragmentClass = UserSettingsFragment.class;
                 break;
             case R.id.nav_endSession:
-                db = new DBManager(this);
+
                 db.deleteAll();
                 db.close();
                 Intent i = new Intent(this.getApplicationContext(),EntryActivity.class);
@@ -213,6 +168,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     @Override
     public void onFragmentInteraction(){
 
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        db.deleteTurnos();
+        db.close();
     }
 
 
