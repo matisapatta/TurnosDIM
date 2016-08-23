@@ -7,8 +7,7 @@
     android:id="@+id/activity_entry"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobile.mads.turnosdim.EntryActivity"
-    android:background="@drawable/background_login">
+    tools:context="mobile.mads.turnosdim.EntryActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,7 +79,12 @@
         app:layout_constraintTop_toBottomOf="@+id/loginDNI"
         app:layout_constraintVertical_bias="1.0" />
 
-
-
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background_login"
+        android:scaleType="fitCenter"
+        />
 
 </android.support.constraint.ConstraintLayout>

@@ -4,8 +4,7 @@
     android:id="@+id/fragmentMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.MainFragment"
-    android:background="@drawable/background_mainfrag">
+    tools:context="layout.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -20,4 +19,23 @@
         android:layout_marginStart="64dp"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentMain"
         android:layout_marginLeft="64dp" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <android.support.v4.view.PagerTitleStrip
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            />
+        <android.support.v4.view.PagerTabStrip
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="top"
+            />
+
+    </android.support.v4.view.ViewPager>
+
 </android.support.constraint.ConstraintLayout>
