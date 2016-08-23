@@ -14,7 +14,8 @@
     <string name="navEndSession">Cerrar Sesión</string>
     <string name="navLocations">Centros de Atención</string>
     <string name="selectEspecialidad">Seleccione la especialidad:</string>
-    <string name="auth">Autenticando</string>
+    <string name="auth">Autenticando...</string>
+    <string name="loading">Cargando datos...</string>
     <string-array name="especialidadesArray">
         <item>Clínica Médica</item>
         <item>Dermatología</item>

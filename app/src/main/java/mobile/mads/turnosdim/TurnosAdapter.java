@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -26,7 +28,11 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.turnos_layout, viewGroup, false);
 
-        TurnosViewHolder tvh = new TurnosViewHolder(itemView);
+        TurnosViewHolder tvh = new TurnosViewHolder(itemView, new TurnosAdapter.IMyViewHolderClicks(){
+                public void onLineClick(View v, String s){
+                    Toast.makeText(v.getContext(), s, Toast.LENGTH_SHORT).show();
+                }
+        });
 
         return tvh;
     }
@@ -37,22 +43,27 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
         viewHolder.bindTurno(item);
     }
 
+
     @Override
     public int getItemCount() {
         return datos.size();
     }
 
-    public static class TurnosViewHolder extends RecyclerView.ViewHolder {
+    public static class TurnosViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtMedico;
         private TextView txtEspecialidad;
         private TextView txtFecha;
+        public IMyViewHolderClicks mListener;
 
-        public TurnosViewHolder(View itemView) {
+        public TurnosViewHolder(View itemView, IMyViewHolderClicks listener) {
             super(itemView);
+            mListener = listener;
             txtMedico = (TextView)itemView.findViewById(R.id.lblMedico);
             txtEspecialidad = (TextView)itemView.findViewById(R.id.lblEspecialidad);
             txtFecha = (TextView)itemView.findViewById(R.id.lblFecha);
+            itemView.setOnClickListener(this);
+
         }
 
         public void bindTurno(TurnosStruct t) {
@@ -61,6 +72,15 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
             txtFecha.setText(t.getFechaTurno());
         }
 
+        @Override
+        public void onClick(View v){
+            mListener.onLineClick(v, txtMedico.getText().toString());
+        }
+
+    }
+
+    public interface IMyViewHolderClicks {
+        public void onLineClick(View v, String s);
     }
 
 }

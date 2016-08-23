@@ -94,6 +94,14 @@ public class TurnosFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        db = new DBManager(getContext());
+        paciente = db.getPaciente(getContext());
+        datosTurno = new ArrayList<TurnosStruct>();
+        //turnos = new TurnosStruct();
+        if(paciente!=null)
+            url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISTURNOS+WSConstants.StringConstants.WS_ID_PACIENTE+
+                    paciente.getIdpaciente()+WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+WSConstants.StringConstants.WS_FORMATO;
+
 
 
 
@@ -140,22 +148,17 @@ public class TurnosFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        db = new DBManager(getContext());
-        paciente = db.getPaciente(getContext());
-        datosTurno = new ArrayList<TurnosStruct>();
-        //turnos = new TurnosStruct();
-        if(paciente!=null)
-        url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISTURNOS+WSConstants.StringConstants.WS_ID_PACIENTE+
-            paciente.getIdpaciente()+WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+WSConstants.StringConstants.WS_FORMATO;
 
         recView = (RecyclerView)getActivity().findViewById(R.id.turnosRecView);
-
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        new HttpRequestTask().execute();
+        if(url!=null)
+            new HttpRequestTask().execute();
+
     }
     @Override
     public void onPause(){
         super.onPause();
+        url = null;
         db.close();
     }
 
@@ -181,7 +184,7 @@ public class TurnosFragment extends Fragment {
         protected void onPreExecute()
         {
             progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage(getContext().getResources().getString(R.string.auth));
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
             progressDialog.show();
         }
 
