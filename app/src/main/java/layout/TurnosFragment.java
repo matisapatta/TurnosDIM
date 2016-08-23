@@ -210,10 +210,25 @@ public class TurnosFragment extends Fragment {
                                 for(int i=0;i<jArray.length();i++){
                                     json_data = jArray.getJSONObject(i);
                                     turnos = new TurnosStruct();
+                                    turnos.setIdTurno(json_data.getString(JSONConstants.JSON_ID_TURNO));
+                                    turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+                                    turnos.setCentro(json_data.getString(JSONConstants.JSON_CENTRO));
+                                    turnos.setConsultorio(json_data.getString(JSONConstants.JSON_CONSULTORIO));
+                                    turnos.setCobertura(json_data.getString(JSONConstants.JSON_COBERTURA));
+                                    turnos.setPreparacion(json_data.getString(JSONConstants.JSON_PREPARACION));
+                                    //if(json_data.getString(JSONConstants.JSON_ESCONSULTA.toLowerCase()).equals("true")) {
+                                        turnos.setEsConsulta(true);
+                                    //} else {
+                                    //    turnos.setEsConsulta(false);
+                                    //}
+                                    // Estos son para la lista
                                     turnos.setMedico(json_data.getString(JSONConstants.JSON_MEDICO));
                                     turnos.setEspecialidad(json_data.getString(JSONConstants.JSON_ESPECIALIDAD));
                                     turnos.setFechaTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+
+                                    db.newTurno(turnos);
                                     datosTurno.add(turnos);
+
                                     listIndex++;
                                 }
 

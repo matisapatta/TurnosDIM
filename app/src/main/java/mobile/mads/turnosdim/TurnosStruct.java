@@ -8,7 +8,8 @@ import java.util.Date;
 
 public class TurnosStruct {
 
-    private long idTurno;
+    private int id;
+    private String idTurno;
     private String fechaTurno;
     private String horaTurno;
     private String medico;
@@ -24,9 +25,10 @@ public class TurnosStruct {
 
     }
 
-    public TurnosStruct(long idTurno, String fechaTurno, String horaTurno, String medico, String especialidad,
+    public TurnosStruct(int id, String idTurno, String fechaTurno, String horaTurno, String medico, String especialidad,
         String centro, String consultorio, String cobertura, String preparacion, boolean esConsulta, ObjectStruct practicas){
 
+        this.id = id;
         this.idTurno = idTurno;
         this.fechaTurno = fechaTurno;
         this.horaTurno = horaTurno;
@@ -40,7 +42,27 @@ public class TurnosStruct {
         this.practicas = practicas;
     }
 
-    public long getIdTurno() {
+    public TurnosStruct(int id, String idTurno, String fechaTurno, String horaTurno, String medico, String especialidad,
+                        String centro, String consultorio, String cobertura, String preparacion, String esConsulta){
+
+        this.id = id;
+        this.idTurno = idTurno;
+        this.fechaTurno = fechaTurno;
+        this.horaTurno = horaTurno;
+        this.medico = medico;
+        this.especialidad = especialidad;
+        this.centro = centro;
+        this.consultorio = consultorio;
+        this.cobertura = cobertura;
+        this.preparacion = preparacion;
+        if(esConsulta.toLowerCase().equals("true")){
+            this.esConsulta = true;
+        } else {
+            this.esConsulta = false;
+        }
+    }
+
+    public String getIdTurno() {
         return idTurno;
     }
 
@@ -80,11 +102,19 @@ public class TurnosStruct {
         return esConsulta;
     }
 
+    public String getEsConsulta(){
+        if(this.esConsulta){
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     public ObjectStruct getPracticas() {
         return practicas;
     }
 
-    public void setIdTurno(long idTurno) {
+    public void setIdTurno(String idTurno) {
         this.idTurno = idTurno;
     }
 

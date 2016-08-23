@@ -1,8 +1,7 @@
 package database;
 
-import android.content.ContentValues;
+
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -29,7 +28,8 @@ public class DataBase extends SQLiteOpenHelper {
     private void createBDBase (SQLiteDatabase db) {
         //Crea las tablas
         db.execSQL(DBLayout.DBConstants.CREATE_USER_TABLE);
-
+        db.execSQL(DBLayout.DBConstants.CREATE_TURNOS_TABLE);
+        db.execSQL(DBLayout.DBConstants.CREATE_PRACTICAS_TABLE);
 
     }
 }

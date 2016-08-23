@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.Observable;
 
 import mobile.mads.turnosdim.Paciente;
+import mobile.mads.turnosdim.TurnosStruct;
 
 /**
  * Created by mati on 8/18/16.
@@ -43,6 +44,42 @@ public class DBManager extends Observable {
         cursor.close();
         b.close();
         return paciente;
+    }
+
+
+    public TurnosStruct getTurno(String idTurno){
+        TurnosStruct turno = null;
+        String selectQuery = "SELECT * FROM " + DBLayout.DBConstants.TURNOS_TABLE+ " WHERE "
+                + DBLayout.DBConstants.TURNOS_TABLE_IDTURNO + " = " + idTurno;
+        SQLiteDatabase db = b.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            turno = new TurnosStruct(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),
+                    cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8), cursor.getString(9),
+                    cursor.getString(10));
+        }
+        cursor.close();
+        b.close();
+        return turno;
+    }
+
+    public void newTurno(TurnosStruct turno){
+        SQLiteDatabase db = b.getWritableDatabase();
+        ContentValues registry = new ContentValues();
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_IDTURNO, turno.getIdTurno());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_FECHA_TURNO, turno.getFechaTurno());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_HORA_TURNO, turno.getHoraTurno());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_MEDICO, turno.getMedico());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_ESPECIALIDAD, turno.getEspecialidad());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_CENTRO, turno.getCentro());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_CONSULTORIO, turno.getConsultorio());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_COBERTURA, turno.getCobertura());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_PREPARACION, turno.getPreparacion());
+        registry.put(DBLayout.DBConstants.TURNOS_TABLE_ESCONSULTA, turno.getEsConsulta());
+        db.insert(DBLayout.DBConstants.TURNOS_TABLE, null, registry);
+        registry.clear();
+        setChanged();
+        notifyObservers();
     }
 
 

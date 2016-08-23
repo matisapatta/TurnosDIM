@@ -31,6 +31,48 @@ public class DBLayout {
 
         static final int CURRENT_VERSION = 1;
 
+        static final String TURNOS_TABLE = "Turnos";
+
+        static final String TURNOS_TABLE_ID = "_id";
+        static final String TURNOS_TABLE_IDTURNO = "idTurno";
+        static final String TURNOS_TABLE_FECHA_TURNO = "FechaTurno";
+        static final String TURNOS_TABLE_HORA_TURNO = "HoraTurno";
+        static final String TURNOS_TABLE_MEDICO = "Medico";
+        static final String TURNOS_TABLE_ESPECIALIDAD = "Especialidad";
+        static final String TURNOS_TABLE_CENTRO = "Centro";
+        static final String TURNOS_TABLE_CONSULTORIO = "Consultorio";
+        static final String TURNOS_TABLE_COBERTURA = "Cobertura";
+        static final String TURNOS_TABLE_PREPARACION = "Preparacion";
+        static final String TURNOS_TABLE_ESCONSULTA = "esConsulta";
+
+        static final String CREATE_TURNOS_TABLE = "CREATE TABLE IF NOT EXISTS " + TURNOS_TABLE
+                + " (" + TURNOS_TABLE_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TURNOS_TABLE_IDTURNO + "  VARCHAR(10), "
+                + TURNOS_TABLE_FECHA_TURNO + " VARCHAR(10), "
+                + TURNOS_TABLE_HORA_TURNO + " VARCHAR(5), "
+                + TURNOS_TABLE_MEDICO + " VARCHAR(40), "
+                + TURNOS_TABLE_ESPECIALIDAD + " VARCHAR(40), "
+                + TURNOS_TABLE_CENTRO + " VARCHAR(40), "
+                + TURNOS_TABLE_CONSULTORIO + " VARCHAR(10), "
+                + TURNOS_TABLE_COBERTURA + " VARCHAR(40), "
+                + TURNOS_TABLE_PREPARACION + " VARCHAR(100), "
+                + TURNOS_TABLE_ESCONSULTA + " VARCHAR(5)" + ")";
+
+        static final String PRACTICAS_TABLE = "Practicas";
+
+        static final String PRACTICAS_TABLE_ID = "_id";
+        static final String PRACTICAS_TABLE_IDTURNO = "idTurno";
+        static final String PRACTICAS_TABLE_IDNOMENCLADOR = "idNomenclador";
+        static final String PRACTICAS_TABLE_DESCRIPCION = "Descripcion";
+
+        static final String CREATE_PRACTICAS_TABLE = "CREATE TABLE IF NOT EXISTS " + PRACTICAS_TABLE
+                + " (" + PRACTICAS_TABLE_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PRACTICAS_TABLE_IDTURNO + "  VARCHAR(10), "
+                + PRACTICAS_TABLE_IDNOMENCLADOR + " VARCHAR(10), "
+                + PRACTICAS_TABLE_DESCRIPCION + " VARCHAR(40)" + ")";
+
+
+
 
     }
 }
