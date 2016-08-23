@@ -3,7 +3,11 @@ package mobile.mads.turnosdim;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 import database.DBManager;
 
@@ -19,6 +23,7 @@ public class DetalleTurno extends AppCompatActivity {
     private DBManager db;
     private TurnosStruct turno;
     private String idTurno;
+    private Button btnCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,8 @@ public class DetalleTurno extends AppCompatActivity {
         contentConsultorio = (TextView)findViewById(R.id.contentConsultorio);
         contentCobertura = (TextView)findViewById(R.id.contentCobertura);
         contentPreparacion = (TextView)findViewById(R.id.contentPreparacion);
+        btnCalendar = (Button)findViewById(R.id.btnSaveCalendar);
+
         db = new DBManager(getApplicationContext());
 
         // Tomo el idturno de la activity pasada
@@ -56,6 +63,21 @@ public class DetalleTurno extends AppCompatActivity {
 
         String s = turno.getFechaTurno()+" "+turno.getHoraTurno();
         contentFecha.setText(s);
+
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                Intent intent = new Intent(Intent.ACTION_EDIT);
+                intent.setType("vnd.android.cursor.item/event");
+                intent.putExtra("beginTime", cal.getTimeInMillis());
+                intent.putExtra("allDay", false);
+                intent.putExtra("rrule", "FREQ=YEARLY");
+                intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+                intent.putExtra("title", "A Test Event from android app");
+                startActivity(intent);
+            }
+        });
 
 
     }

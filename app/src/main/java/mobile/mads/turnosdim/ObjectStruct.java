@@ -7,6 +7,7 @@ import static android.R.attr.id;
  */
 
 public class ObjectStruct {
+    private int id;
     private long idObj;
     private String descripcion;
 
@@ -15,6 +16,12 @@ public class ObjectStruct {
     }
 
     public ObjectStruct(long idObj, String descripcion){
+        this.idObj = idObj;
+        this.descripcion = descripcion;
+    }
+
+    public ObjectStruct(int id,long idObj, String descripcion){
+        this.id = id;
         this.idObj = idObj;
         this.descripcion = descripcion;
     }
