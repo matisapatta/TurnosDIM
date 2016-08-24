@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by mati on 8/22/16.
@@ -33,8 +35,6 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
         TurnosViewHolder tvh = new TurnosViewHolder(itemView, new TurnosAdapter.IMyViewHolderClicks(){
                 public void onLineClick(View v, String s, int i){
-                    Toast.makeText(v.getContext(), s, Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(v.getContext(), DetalleTurno.class);
                     Bundle b = new Bundle();
                     b.putString("IDTURNO",datos.get(i).getIdTurno());
@@ -62,7 +62,10 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
         private TextView txtMedico;
         private TextView txtEspecialidad;
-        private TextView txtFecha;
+        private TextView txtHora;
+        private TextView txtDia;
+        private TextView txtNumDia;
+        private TextView txtMes;
         public IMyViewHolderClicks mListener;
 
         public TurnosViewHolder(View itemView, IMyViewHolderClicks listener) {
@@ -70,7 +73,10 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
             mListener = listener;
             txtMedico = (TextView)itemView.findViewById(R.id.lblMedico);
             txtEspecialidad = (TextView)itemView.findViewById(R.id.lblEspecialidad);
-            txtFecha = (TextView)itemView.findViewById(R.id.lblFecha);
+            txtHora = (TextView)itemView.findViewById(R.id.lblHora);
+            txtDia = (TextView)itemView.findViewById(R.id.lblDia);
+            txtNumDia = (TextView)itemView.findViewById(R.id.lblNumDia);
+            txtMes = (TextView)itemView.findViewById(R.id.lblMes);
             itemView.setOnClickListener(this);
 
         }
@@ -79,7 +85,17 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
             txtMedico.setText(t.getMedico());
             txtEspecialidad.setText(t.getEspecialidad());
-            txtFecha.setText(t.getFechaTurno());
+            txtHora.setText(t.getHoraTurno());
+            Date date = new Util().StringToDate(t.getFechaTurno());
+            String day = new Util().getDay(date);
+            String dayn = new Util().getNumberDay(date);
+            String month = new Util().getMonth(date);
+            txtNumDia.setText(dayn);
+            txtDia.setText(day);
+            txtMes.setText(month);
+
+
+
         }
 
         @Override

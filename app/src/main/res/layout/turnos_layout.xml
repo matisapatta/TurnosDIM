@@ -1,25 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <TextView android:id="@+id/lblMedico"
-        android:layout_width="match_parent"
+<TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+<TableRow>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        >
 
-    <TextView android:id="@+id/lblEspecialidad"
-        android:layout_width="match_parent"
+        <TextView android:id="@+id/lblDia"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Mie"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <TextView android:id="@+id/lblNumDia"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:text= "06"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+        <TextView android:id="@+id/lblMes"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:text="Abril"
+            android:textAlignment="center"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="normal"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <TextView android:id="@+id/lblFecha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="normal"
-        android:textSize="12sp" />
+        <TextView android:id="@+id/lblMedico"
+            android:gravity="center_horizontal"
 
-</LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Medico dfgjkdgj dkjfgdjfgk "
+            />
+
+        <TextView android:id="@+id/lblEspecialidad"
+            android:gravity="center"
+            android:layout_marginLeft="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:text= "especialidad dfgdfgd dgdfgdf"
+            />
+
+        <TextView android:id="@+id/lblHora"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:text="fecha"
+            />
+
+    </LinearLayout>
+</TableRow>
+</TableLayout>
