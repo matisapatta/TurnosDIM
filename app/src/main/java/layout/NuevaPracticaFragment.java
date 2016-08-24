@@ -4,27 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 
-import database.DBManager;
 import mobile.mads.turnosdim.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NuevoTurnoFragment.OnFragmentInteractionListener} interface
+ * {@link NuevaPracticaFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NuevoTurnoFragment#newInstance} factory method to
+ * Use the {@link NuevaPracticaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NuevoTurnoFragment extends Fragment {
+public class NuevaPracticaFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,11 +30,7 @@ public class NuevoTurnoFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private DBManager db;
-    private Button btn1;
-    private Button btn2;
-
-    public NuevoTurnoFragment() {
+    public NuevaPracticaFragment() {
         // Required empty public constructor
     }
 
@@ -48,15 +38,16 @@ public class NuevoTurnoFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-
-     * @return A new instance of fragment NuevoTurnoFragment.
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment NuevaPracticaFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NuevoTurnoFragment newInstance() {
-        NuevoTurnoFragment fragment = new NuevoTurnoFragment();
+    public static NuevaPracticaFragment newInstance(String param1, String param2) {
+        NuevaPracticaFragment fragment = new NuevaPracticaFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,64 +59,37 @@ public class NuevoTurnoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        db = new DBManager(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_nuevo_turno, container, false);
-
-
-        return view;
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        btn1 = (Button)getView().findViewById(R.id.btnTest);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager transaction = getActivity().getSupportFragmentManager();
-                transaction.beginTransaction().replace(R.id.content_main,NuevaPracticaFragment.newInstance("","")).commit();
-            }
-        });
-        btn2 = (Button)getView().findViewById(R.id.btnTest2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager transaction = getActivity().getSupportFragmentManager();
-                transaction.beginTransaction().replace(R.id.content_main,NuevaConsultaFragment.newInstance("","")).commit();
-            }
-        });
-
+        return inflater.inflate(R.layout.fragment_nueva_practica, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction();
+            mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        db.close();
     }
 
     /**
@@ -140,6 +104,6 @@ public class NuevoTurnoFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction();
+        void onFragmentInteraction(Uri uri);
     }
 }

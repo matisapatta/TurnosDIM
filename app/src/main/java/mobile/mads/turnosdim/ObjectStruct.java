@@ -8,25 +8,25 @@ import static android.R.attr.id;
 
 public class ObjectStruct {
     private int id;
-    private long idObj;
+    private String idObj;
     private String descripcion;
 
     public ObjectStruct(){
 
     }
 
-    public ObjectStruct(long idObj, String descripcion){
+    public ObjectStruct(String idObj, String descripcion){
         this.idObj = idObj;
         this.descripcion = descripcion;
     }
 
-    public ObjectStruct(int id,long idObj, String descripcion){
+    public ObjectStruct(int id,String idObj, String descripcion){
         this.id = id;
         this.idObj = idObj;
         this.descripcion = descripcion;
     }
 
-    public long getIdObj() {
+    public String getIdObj() {
         return idObj;
     }
 
@@ -34,7 +34,7 @@ public class ObjectStruct {
         return descripcion;
     }
 
-    public void setIdObj(long idObj) {
+    public void setIdObj(String idObj) {
         this.idObj = idObj;
     }
 
