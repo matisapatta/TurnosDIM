@@ -4,14 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Handler;
 
 import database.DBManager;
 import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +45,31 @@ public class MainFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    //Elementos para manejar pager superior
+    int[] imagenes = {
+            R.drawable.pager1,
+            R.drawable.pager2,
+            R.drawable.pager3
+    };
+    ManagerPager managerPager;
+    ViewPager mViewPager;
+
+    //Handler para hacer el autoscroleo del pager
+    private android.os.Handler handler;
+    private int delay = 2500; //milisegundos de delay para cambio de pagina del pager
+    private int page = 0;
+    Runnable runnable = new Runnable() {
+        public void run() {
+            if (managerPager.getCount() == page+1) {
+                page = 0;
+            } else {
+                page++;
+            }
+            mViewPager.setCurrentItem(page, true);
+            handler.postDelayed(this, delay);
+        }
+    };
 
     public MainFragment() {
         // Required empty public constructor
@@ -65,13 +99,46 @@ public class MainFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        handler = new android.os.Handler();
+        //Creo el pager
+        managerPager = new ManagerPager(getActivity().getSupportFragmentManager());
+        //Agrego las imagenes al pager utilizando fragmentos MainViewPager que utiliza el layout
+        //de fragment_main_view_pager.x ml.
+        mViewPager = (ViewPager) view.findViewById(R.id.pager);
+        for (int i = 0; i < imagenes.length; i++) {
+            managerPager.agregarFragmentos(MainViewPagerFragment.newInstance(imagenes[i]));
+        }
+        mViewPager.setAdapter(managerPager);
+
+        //Hago override de onPageSelected para guardar el numero de pagina actual y utilizarlo
+        //en el handler para el auto scrolleo del pager
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                page = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        return view;
 
 
     }
@@ -127,4 +194,44 @@ public class MainFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction();
     }
+
+    //Override para que funcione bien el handler de autoscrolleo de pager (lo saque de google)
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, delay);
+    }
+
+    //Override para que funcione bien el handler de autoscrolleo de pager (lo saque de google)
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    //Clase que extiende de un Adapter de Pager, es estandar para manejarlo, sacada de google
+    public class ManagerPager extends FragmentPagerAdapter {
+
+        List<Fragment> fragmentos;
+        public ManagerPager(FragmentManager fm) {
+            super(fm);
+            fragmentos = new ArrayList();
+        }
+
+        public void agregarFragmentos(Fragment xfragmento){
+            fragmentos.add(xfragmento);
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentos.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentos.size();
+        }
+    }
+
 }

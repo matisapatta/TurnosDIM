@@ -1,0 +1,14 @@
+<!-- <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"> -->
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:contentDescription="pager"
+        android:id="@+id/imageInPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:gravity="top"
+        />
