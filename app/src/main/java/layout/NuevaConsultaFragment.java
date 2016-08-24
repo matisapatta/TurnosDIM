@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -61,6 +62,9 @@ public class NuevaConsultaFragment extends Fragment {
     private String success;
     private DBManager db;
     private Paciente paciente;
+    private ArrayList<String> arrayEsp;
+    private ArrayList<String> arrayMed;
+    private String url;
 
 
     public NuevaConsultaFragment() {
@@ -101,22 +105,43 @@ public class NuevaConsultaFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_nueva_consulta, container, false);
-        spinnerEspecialidades = (Spinner)getActivity().findViewById(R.id.spinnerEspecialidad);
-        spinnerMedicos = (Spinner)getActivity().findViewById(R.id.spinnerMedico);
-        btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscar);
+
         return v;
     }
     @Override
     public void onStart(){
         super.onStart();
-        dataEsp = new ArrayList<ObjectStruct>();
-        dataMed = new ArrayList<ObjectStruct>();
+        spinnerEspecialidades = (Spinner)getActivity().findViewById(R.id.spinnerEspecialidad);
+        spinnerMedicos = (Spinner)getActivity().findViewById(R.id.spinnerMedico);
+        btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscar);
 
-        String url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETESPECIALIDADES+
+
+
+        url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETESPECIALIDADES+
                 WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
                 paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_FORMATO;
 
         new HttpRequestTaskEsp().execute(url);
+
+        spinnerEspecialidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ObjectStruct o = dataEsp.get(position);
+
+
+                url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETMEDICOXESPECIALIDAD+
+                        WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
+                        paciente.getTokenPaciente()+WSConstants.StringConstants.WS_ESPECIALIDAD+o.getIdObj()+
+                        WSConstants.StringConstants.WS_FORMATO;
+
+                new HttpRequestTaskMed().execute(url);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -185,7 +210,8 @@ public class NuevaConsultaFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(jsonData);
                         JSONObject json_data;
-
+                        dataEsp = new ArrayList<ObjectStruct>();
+                        arrayEsp = new ArrayList<String>();
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
                         if(success.equals("1")){
                             JSONArray jArray = jsonObject.getJSONArray("especialidades");
@@ -195,6 +221,7 @@ public class NuevaConsultaFragment extends Fragment {
                                 especialidad.setIdObj(json_data.getString(JSONConstants.JSON_ID));
                                 especialidad.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION_ESPECIALIDAD));
                                 dataEsp.add(especialidad);
+                                arrayEsp.add(especialidad.getDescripcion());
                             }
 
                             return success;
@@ -220,10 +247,10 @@ public class NuevaConsultaFragment extends Fragment {
         @Override
         protected void onPostExecute(String string) {
             progressDialog.dismiss();
-            if(success!=null) {
+            if(string!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(),dataEsp);
+                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(),arrayEsp);
                     spinnerEspecialidades.setAdapter(adapter);
 
                 } else {
@@ -232,7 +259,7 @@ public class NuevaConsultaFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
             }
-           dataEsp = null;
+           //dataEsp = null;
         }
 
     }
@@ -263,7 +290,8 @@ public class NuevaConsultaFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(jsonData);
                         JSONObject json_data;
-
+                        dataMed = new ArrayList<ObjectStruct>();
+                        arrayMed = new ArrayList<String>();
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
                         if(success.equals("1")){
                             JSONArray jArray = jsonObject.getJSONArray("items");
@@ -271,7 +299,8 @@ public class NuevaConsultaFragment extends Fragment {
                                 json_data = jArray.getJSONObject(i);
                                 medico = new ObjectStruct();
                                 medico.setIdObj(json_data.getString(JSONConstants.JSON_ID));
-                                medico.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION));
+                                medico.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION_ESPECIALIDAD));
+                                arrayMed.add(medico.getDescripcion());
                                 dataMed.add(medico);
                             }
 
@@ -298,10 +327,10 @@ public class NuevaConsultaFragment extends Fragment {
         @Override
         protected void onPostExecute(String string) {
             progressDialog.dismiss();
-            if(success!=null) {
+            if(string!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(),dataMed);
+                    CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getContext(),arrayMed);
                     spinnerMedicos.setAdapter(adapter);
 
                 } else {
@@ -312,7 +341,6 @@ public class NuevaConsultaFragment extends Fragment {
                 Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
                 spinnerMedicos.setAdapter(null);
             }
-            dataMed = null;
         }
 
     }

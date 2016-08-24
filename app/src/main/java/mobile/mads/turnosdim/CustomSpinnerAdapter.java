@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -13,20 +14,23 @@ import java.util.ArrayList;
  * Created by mati on 8/24/16.
  */
 
-public class CustomSpinnerAdapter extends ArrayAdapter<ObjectStruct> implements SpinnerAdapter {
+public class CustomSpinnerAdapter extends ArrayAdapter<String> implements SpinnerAdapter {
 
-    private ArrayList<ObjectStruct> data;
-    private String[] array;
+    private ArrayList<String> data;
     private Context context;
 
-    public CustomSpinnerAdapter(Context context, ArrayList<ObjectStruct> data){
-        super(context,R.layout.support_simple_spinner_dropdown_item,data);
+    public CustomSpinnerAdapter(Context context, ArrayList<String> data){
+        super(context,R.layout.support_simple_spinner_dropdown_item, data);
         this.data = data;
         this.context = context;
+
+
     }
-    @Override
+    /*@Override
     public View getView(int position, View convertView, ViewGroup parent){
+
         View row = convertView;
+
 
         if(row == null)
         {
@@ -34,14 +38,6 @@ public class CustomSpinnerAdapter extends ArrayAdapter<ObjectStruct> implements 
             LayoutInflater inflater = LayoutInflater.from(getContext());
             row = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
         }
-        //put the data in it
-        /*String item = data<position>;
-        if(item != null)
-        {
-            TextView text1 = (TextView) row.findViewById(R.id.rowText);
-            text1.setTextColor(Color.WHITE);
-            text1.setText(item);
-        }*/
 
         return row;
     }
@@ -57,16 +53,11 @@ public class CustomSpinnerAdapter extends ArrayAdapter<ObjectStruct> implements 
             LayoutInflater inflater = LayoutInflater.from(getContext());
             row = inflater.inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
         }
-        //put the data in it
-        /*String item = data<position>;
-        if(item != null)
-        {
-            TextView text1 = (TextView) row.findViewById(R.id.rowText);
-            text1.setTextColor(Color.WHITE);
-            text1.setText(item);
-        }*/
+
+        // Tambien hay que cargar los items en el nuevo layout
+
 
         return row;
-    }
+    }*/
 }
 
