@@ -8,10 +8,10 @@
 
 
     <TextView
-        android:text="Fragment Nuevo Turno"
+        android:text="@string/selectEsp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/selectEspecText"
         android:layout_marginTop="24dp"
         app:layout_constraintTop_toTopOf="@+id/fragmentNuevoTurno"
         android:layout_marginStart="120dp"
@@ -21,7 +21,7 @@
     <Spinner
         android:layout_width="331dp"
         android:layout_height="22dp"
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerEspec"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="@+id/fragmentNuevoTurno"
         android:layout_marginRight="16dp"
@@ -29,5 +29,33 @@
         app:layout_constraintLeft_toLeftOf="@+id/fragmentNuevoTurno"
         android:layout_marginLeft="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentNuevoTurno"
-        android:layout_marginBottom="392dp" />
+        android:layout_marginBottom="416dp" />
+
+    <TextView
+        android:text="@string/selectMed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectMedicoText"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerEspec"
+        android:layout_marginStart="120dp"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentNuevoTurno"
+        android:layout_marginLeft="120dp" />
+
+    <Spinner
+        android:layout_width="330dp"
+        android:layout_height="28dp"
+        android:id="@+id/spinner"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/fragmentNuevoTurno"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/fragmentNuevoTurno"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="192dp"
+        app:layout_constraintTop_toTopOf="@+id/fragmentNuevoTurno" />
+
+
+
+
 </android.support.constraint.ConstraintLayout>

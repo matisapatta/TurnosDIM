@@ -96,7 +96,7 @@ public class TurnosFragment extends Fragment {
         }
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
-        datosTurno = new ArrayList<TurnosStruct>();
+
         //turnos = new TurnosStruct();
         if(paciente!=null)
             url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISTURNOS+WSConstants.StringConstants.WS_ID_PACIENTE+
@@ -148,7 +148,8 @@ public class TurnosFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-
+        db.deleteTurnos();
+        datosTurno = new ArrayList<TurnosStruct>();
         recView = (RecyclerView)getActivity().findViewById(R.id.turnosRecView);
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         if(url!=null)
@@ -158,9 +159,24 @@ public class TurnosFragment extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        url = null;
+        //url = null;
+        recView.setAdapter(null);
         db.close();
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        super.onStart();
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -211,7 +227,7 @@ public class TurnosFragment extends Fragment {
                                     json_data = jArray.getJSONObject(i);
                                     turnos = new TurnosStruct();
                                     turnos.setIdTurno(json_data.getString(JSONConstants.JSON_ID_TURNO));
-                                    turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+                                    turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_HORA_TURNO));
                                     turnos.setCentro(json_data.getString(JSONConstants.JSON_CENTRO));
                                     turnos.setConsultorio(json_data.getString(JSONConstants.JSON_CONSULTORIO));
                                     turnos.setCobertura(json_data.getString(JSONConstants.JSON_COBERTURA));
@@ -273,6 +289,7 @@ public class TurnosFragment extends Fragment {
                 Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
             }
             db.close();
+            datosTurno = null;
         }
 
     }

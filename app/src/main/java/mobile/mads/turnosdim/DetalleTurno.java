@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
+import java.util.Date;
 
 import database.DBManager;
 
@@ -24,6 +28,7 @@ public class DetalleTurno extends AppCompatActivity {
     private TurnosStruct turno;
     private String idTurno;
     private Button btnCalendar;
+    private Date dateObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +68,27 @@ public class DetalleTurno extends AppCompatActivity {
 
         String s = turno.getFechaTurno()+" "+turno.getHoraTurno();
         contentFecha.setText(s);
+        /*SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy kk:mm");
+        try {
+            dateObj = curFormater.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+
+        dateObj = new Util().StringToDate(s,1);
 
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
+                Calendar cal1 = Calendar.getInstance();
+                cal1.setTime(dateObj);
                 Intent intent = new Intent(Intent.ACTION_EDIT);
                 intent.setType("vnd.android.cursor.item/event");
-                intent.putExtra("beginTime", cal.getTimeInMillis());
+                intent.putExtra("beginTime", cal1.getTimeInMillis());
                 intent.putExtra("allDay", false);
-                intent.putExtra("rrule", "FREQ=YEARLY");
-                intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
-                intent.putExtra("title", "A Test Event from android app");
+                intent.putExtra("endTime", cal1.getTimeInMillis()+30*60*1000);
+                intent.putExtra("title", "Turno "+turno.getEspecialidad()+" con "+turno.getMedico());
+                intent.putExtra("eventLocation", turno.getCentro());
                 startActivity(intent);
             }
         });
