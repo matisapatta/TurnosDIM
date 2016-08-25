@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import database.DBManager;
 import mobile.mads.turnosdim.CustomSpinnerAdapter;
 import mobile.mads.turnosdim.JSONConstants;
+import mobile.mads.turnosdim.NuevaConsultaAdapter;
 import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.R;
 import mobile.mads.turnosdim.ServiceHandler;
-import mobile.mads.turnosdim.TurnosAdapter;
 import mobile.mads.turnosdim.TurnosStruct;
 import mobile.mads.turnosdim.WSConstants;
 import mobile.mads.turnosdim.Paciente;
@@ -121,7 +121,7 @@ public class NuevaConsultaFragment extends Fragment {
         spinnerEspecialidades = (Spinner)getActivity().findViewById(R.id.spinnerEspecialidad);
         spinnerMedicos = (Spinner)getActivity().findViewById(R.id.spinnerMedico);
         btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscar);
-        datosTurno = new ArrayList<TurnosStruct>();
+
         recView = (RecyclerView)getActivity().findViewById(R.id.nuevaConsultaRecView);
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
@@ -138,6 +138,7 @@ public class NuevaConsultaFragment extends Fragment {
         spinnerEspecialidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                recView.setAdapter(null);
                 ObjectStruct o = dataEsp.get(position);
 
 
@@ -147,6 +148,17 @@ public class NuevaConsultaFragment extends Fragment {
                         WSConstants.StringConstants.WS_FORMATO;
 
                 new HttpRequestTaskMed().execute(url);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerMedicos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                recView.setAdapter(null);
             }
 
             @Override
@@ -398,6 +410,7 @@ public class NuevaConsultaFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(jsonData);
                         JSONObject json_data;
+                        datosTurno = new ArrayList<TurnosStruct>();
 
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
                         if(success.equals("1")){
@@ -405,6 +418,7 @@ public class NuevaConsultaFragment extends Fragment {
                             for(int i=0;i<jArray.length();i++){
                                 json_data = jArray.getJSONObject(i);
                                 turnos = new TurnosStruct();
+
                                 turnos.setIdTurno(json_data.getString(JSONConstants.JSON_ID_TURNO));
                                 turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_HORA_TURNO));
                                 turnos.setCentro(json_data.getString(JSONConstants.JSON_CENTRO));
@@ -454,13 +468,13 @@ public class NuevaConsultaFragment extends Fragment {
             if(success!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno);
                     recView.setAdapter(adapter);
 
                 } else {
 
                     Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
-                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno);
                     recView.setAdapter(adapter);
 
                 }
