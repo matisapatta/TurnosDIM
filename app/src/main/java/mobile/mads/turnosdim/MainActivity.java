@@ -1,11 +1,14 @@
 package mobile.mads.turnosdim;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import database.DBManager;
 import layout.LocationsFragment;
@@ -36,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     private DBManager db;
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
+    private ProgressDialog progressDialog;
+    private String url;
+    private String success;
+    private Paciente paciente;
 
 
     @Override
@@ -66,8 +79,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         getSupportFragmentManager().beginTransaction()
              .replace(R.id.content_main, selectedFragment).commit();
         db = new DBManager(this);
-
-
+        paciente = new Paciente();
+        paciente = db.getPaciente(this);
+        url =    WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISDATOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
+                paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+
+                WSConstants.StringConstants.WS_FORMATO;
+        new HttpRequestTask().execute();
 
 
     }
@@ -178,6 +195,71 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         db.close();
     }
 
+
+    public class HttpRequestTask extends AsyncTask<Void , Void, String> {
+        //Before running code in separate thread
+        @Override
+        protected void onPreExecute()
+        {
+//            progressDialog = new ProgressDialog(MainActivity.this);
+//            progressDialog.setMessage(getApplicationContext().getResources().getString(R.string.auth));
+//            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(url);
+
+                if(jsonData!=null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            paciente.setCobertura(jsonObject.getString(JSONConstants.JSON_COBERTURA2));
+                            paciente.setEmail(jsonObject.getString(JSONConstants.JSON_EMAIL));
+                            paciente.setFnac(jsonObject.getString(JSONConstants.JSON_FECHA_NAC));
+                            paciente.setSexo(jsonObject.getString(JSONConstants.JSON_SEXO));
+                            paciente.setTel(jsonObject.getString(JSONConstants.JSON_TEL));
+                            paciente.setTelad(jsonObject.getString(JSONConstants.JSON_TEL_AD));
+                            paciente.setPlan(jsonObject.getString(JSONConstants.JSON_PLAN));
+
+                            db.updatePaciente(paciente.getId(),paciente);
+                            return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+//            progressDialog.dismiss();
+            if(!success.equals("1")){
+                Toast.makeText(getApplicationContext(), string,Toast.LENGTH_LONG).show();
+            }
+            //db.close();
+        }
+
+    }
 
 }
 

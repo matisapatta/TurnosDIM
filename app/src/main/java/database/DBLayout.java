@@ -21,15 +21,31 @@ public class DBLayout {
         static final String USER_TABLE_TOKEN = "TokenPaciente";
         static final String USER_TABLE_DNI = "dni";
         static final String USER_TABLE_NOMBRE = "nombre";
+        static final String USER_TABLE_COBERTURA = "cobertura";
+        static final String USER_TABLE_EMAIL = "email";
+        static final String USER_TABLE_FNAC = "fnac";
+        static final String USER_TABLE_SEXO = "sexo";
+        static final String USER_TABLE_TEL = "telefono";
+        static final String USER_TABLE_TELAD = "telefonoad";
+        static final String USER_TABLE_PLAN = "plan";
+
+
+
         static final String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS " + USER_TABLE
                 + " (" + USER_TABLE_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + USER_TABLE_IDPACIENTE + "  VARCHAR(10), "
                 + USER_TABLE_DNI + " VARCHAR(8), "
                 + USER_TABLE_NOMBRE + " VARCHAR(40), "
-                + USER_TABLE_TOKEN + " VARCHAR(40)" + ")";
+                + USER_TABLE_TOKEN + " VARCHAR(40), "
+                + USER_TABLE_COBERTURA + " VARCHAR(40), "
+                + USER_TABLE_EMAIL + " VARCHAR(40), "
+                + USER_TABLE_FNAC + " VARCHAR(8), "
+                + USER_TABLE_SEXO + " VARCHAR(2), "
+                + USER_TABLE_TEL + " VARCHAR(20), "
+                + USER_TABLE_TELAD + " VARCHAR(20), "
+                + USER_TABLE_PLAN + " VARCHAR(40)" + ")";
 
-
-        static final int CURRENT_VERSION = 1;
+        static final int CURRENT_VERSION = 3;
 
         static final String TURNOS_TABLE = "Turnos";
 

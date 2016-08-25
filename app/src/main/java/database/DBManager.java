@@ -39,7 +39,9 @@ public class DBManager extends Observable {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
-            paciente = new Paciente(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            paciente = new Paciente(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),
+                    cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8), cursor.getString(9),
+                    cursor.getString(10),cursor.getString(11));
         }
         cursor.close();
         b.close();
@@ -102,10 +104,43 @@ public class DBManager extends Observable {
         registry.put(DBLayout.DBConstants.USER_TABLE_DNI, paciente.getDni());
         registry.put(DBLayout.DBConstants.USER_TABLE_TOKEN, paciente.getTokenPaciente());
         registry.put(DBLayout.DBConstants.USER_TABLE_NOMBRE, paciente.getNombre());
+        // Nuevo
+        registry.put(DBLayout.DBConstants.USER_TABLE_COBERTURA, paciente.getCobertura());
+        registry.put(DBLayout.DBConstants.USER_TABLE_EMAIL, paciente.getEmail());
+        registry.put(DBLayout.DBConstants.USER_TABLE_FNAC, paciente.getFnac());
+        registry.put(DBLayout.DBConstants.USER_TABLE_SEXO, paciente.getSexo());
+        registry.put(DBLayout.DBConstants.USER_TABLE_TEL, paciente.getTel());
+        registry.put(DBLayout.DBConstants.USER_TABLE_TELAD, paciente.getTelad());
+        registry.put(DBLayout.DBConstants.USER_TABLE_PLAN, paciente.getPlan());
+        // Fin nuevo
         db.insert(DBLayout.DBConstants.USER_TABLE, null, registry);
         registry.clear();
         setChanged();
         notifyObservers();
+    }
+
+    public void updatePaciente(int id, Paciente paciente){
+        SQLiteDatabase db = b.getWritableDatabase();
+        ContentValues registry = new ContentValues();
+        registry.put(DBLayout.DBConstants.USER_TABLE_IDPACIENTE, paciente.getIdpaciente());
+        registry.put(DBLayout.DBConstants.USER_TABLE_DNI, paciente.getDni());
+        registry.put(DBLayout.DBConstants.USER_TABLE_TOKEN, paciente.getTokenPaciente());
+        registry.put(DBLayout.DBConstants.USER_TABLE_NOMBRE, paciente.getNombre());
+        // Nuevo
+        registry.put(DBLayout.DBConstants.USER_TABLE_COBERTURA, paciente.getCobertura());
+        registry.put(DBLayout.DBConstants.USER_TABLE_EMAIL, paciente.getEmail());
+        registry.put(DBLayout.DBConstants.USER_TABLE_FNAC, paciente.getFnac());
+        registry.put(DBLayout.DBConstants.USER_TABLE_SEXO, paciente.getSexo());
+        registry.put(DBLayout.DBConstants.USER_TABLE_TEL, paciente.getTel());
+        registry.put(DBLayout.DBConstants.USER_TABLE_TELAD, paciente.getTelad());
+        registry.put(DBLayout.DBConstants.USER_TABLE_PLAN, paciente.getPlan());
+        // Fin nuevo
+        String where = DBLayout.DBConstants.USER_TABLE_ID + "=?";
+        db.update(DBLayout.DBConstants.USER_TABLE,registry, where, new String[]{String.valueOf(id)});
+        registry.clear();
+        setChanged();
+        notifyObservers();
+
     }
 
     // Actualizar una entrada existente, usada para editar.

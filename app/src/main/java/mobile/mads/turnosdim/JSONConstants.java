@@ -15,13 +15,14 @@ public final class JSONConstants implements BaseColumns {
     public static final String JSON_TOKEN = "TokenPaciente";
     public static final String JSON_EMAIL = "email";
     public static final String JSON_REGISTRADO = "registrado";
-    public static final String JSON_DNI = "idpaciente";
+    public static final String JSON_DNI = "dni";
     public static final String JSON_COBERTURA = "Cobertura";
+    public static final String JSON_COBERTURA2 = "cobertura";
     public static final String JSON_FECHA_NAC = "fnac";
     public static final String JSON_TEL = "telefono";
     public static final String JSON_TEL_AD = "telefonoad";
     public static final String JSON_PLAN = "plan";
-    public static final String JSON_SEXO = "idpaciente";
+    public static final String JSON_SEXO = "sexo";
     public static final String JSON_ARRAY_TURNOS = "Turnos";
     public static final String JSON_ID_TURNO = "idTurno";
     public static final String JSON_FECHA_TURNO = "FechaTurno";

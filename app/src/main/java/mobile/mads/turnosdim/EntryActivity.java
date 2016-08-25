@@ -44,6 +44,7 @@ public class EntryActivity extends AppCompatActivity {
 
         // Inicializo la DB
         db = new DBManager(getApplicationContext());
+        //db.update();
 
         if(db.getPaciente(getApplicationContext())!=null){
             db.close();
@@ -99,6 +100,25 @@ public class EntryActivity extends AppCompatActivity {
                             paciente.setNombre(jsonObject.getString(JSONConstants.JSON_NOMBRE));
                             paciente.setTokenPaciente(jsonObject.getString(JSONConstants.JSON_TOKEN));
                             paciente.setDni(dni);
+
+                            // Nuevo
+                            /*url = WSConstants.StringConstants.WS_COMANDO_MISDATOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
+                                    paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+
+                                    WSConstants.StringConstants.WS_FORMATO;
+                            String jsonData2 = sh.doGetRequest(url);
+                            if(jsonData2!=null){
+                                try {
+                                    JSONObject jsonObject2 = new JSONObject(jsonData2);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }*/
+
+
+
+
                             db.newEntry(paciente);
                             return success;
                         } else  {
