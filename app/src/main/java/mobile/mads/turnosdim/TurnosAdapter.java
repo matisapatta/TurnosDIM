@@ -3,6 +3,7 @@ package mobile.mads.turnosdim;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import layout.TurnosFragment;
 
 /**
  * Created by mati on 8/22/16.
@@ -34,13 +37,15 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
                 .inflate(R.layout.turnos_layout, viewGroup, false);
 
         TurnosViewHolder tvh = new TurnosViewHolder(itemView, new TurnosAdapter.IMyViewHolderClicks(){
-                public void onLineClick(View v, String s, int i){
+                public void onLineClick(View v, int i){
+
                     Intent intent = new Intent(v.getContext(), DetalleTurno.class);
                     Bundle b = new Bundle();
                     b.putString("IDTURNO",datos.get(i).getIdTurno());
                     intent.putExtras(b);
                     v.getContext().startActivity(intent);
-                }
+                    }
+
         });
 
         return tvh;
@@ -100,13 +105,13 @@ public class TurnosAdapter extends RecyclerView.Adapter<TurnosAdapter.TurnosView
 
         @Override
         public void onClick(View v){
-            mListener.onLineClick(v, txtMedico.getText().toString(), getAdapterPosition());
+            mListener.onLineClick(v, getAdapterPosition());
         }
 
     }
 
     public interface IMyViewHolderClicks {
-        public void onLineClick(View v, String s, int i);
+        public void onLineClick(View v, int i);
     }
 
 }

@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,8 @@ import mobile.mads.turnosdim.JSONConstants;
 import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.R;
 import mobile.mads.turnosdim.ServiceHandler;
+import mobile.mads.turnosdim.TurnosAdapter;
+import mobile.mads.turnosdim.TurnosStruct;
 import mobile.mads.turnosdim.WSConstants;
 import mobile.mads.turnosdim.Paciente;
 
@@ -65,6 +69,9 @@ public class NuevaConsultaFragment extends Fragment {
     private ArrayList<String> arrayEsp;
     private ArrayList<String> arrayMed;
     private String url;
+    private RecyclerView recView;
+    private ArrayList<TurnosStruct> datosTurno;
+    private TurnosStruct turnos;
 
 
     public NuevaConsultaFragment() {
@@ -114,6 +121,9 @@ public class NuevaConsultaFragment extends Fragment {
         spinnerEspecialidades = (Spinner)getActivity().findViewById(R.id.spinnerEspecialidad);
         spinnerMedicos = (Spinner)getActivity().findViewById(R.id.spinnerMedico);
         btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscar);
+        datosTurno = new ArrayList<TurnosStruct>();
+        recView = (RecyclerView)getActivity().findViewById(R.id.nuevaConsultaRecView);
+        recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
 
 
@@ -122,6 +132,8 @@ public class NuevaConsultaFragment extends Fragment {
                 paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_FORMATO;
 
         new HttpRequestTaskEsp().execute(url);
+
+
 
         spinnerEspecialidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -140,6 +152,21 @@ public class NuevaConsultaFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectStruct esp = dataEsp.get(spinnerEspecialidades.getSelectedItemPosition());
+                ObjectStruct med = dataMed.get(spinnerMedicos.getSelectedItemPosition());
+
+                String param = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETTURNOSCONSULTAS+
+                        WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
+                        paciente.getTokenPaciente()+WSConstants.StringConstants.WS_IDESPECIALIDAD+esp.getIdObj()+
+                        WSConstants.StringConstants.WS_IDMEDICO+med.getIdObj()+WSConstants.StringConstants.WS_IDOBRASOCIAL+
+                        "PRUEBA"+ WSConstants.StringConstants.WS_FORMATO;
+                new HttpRequestTaskTurnos().execute(param);
             }
         });
 
@@ -344,4 +371,106 @@ public class NuevaConsultaFragment extends Fragment {
         }
 
     }
+
+    public class HttpRequestTaskTurnos extends AsyncTask<String , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(params[0]);
+
+                if(jsonData!=null){
+                    try {
+                        // Manejo de Array en JSON
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        JSONObject json_data;
+
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            JSONArray jArray = jsonObject.getJSONArray("Turnos");
+                            for(int i=0;i<jArray.length();i++){
+                                json_data = jArray.getJSONObject(i);
+                                turnos = new TurnosStruct();
+                                turnos.setIdTurno(json_data.getString(JSONConstants.JSON_ID_TURNO));
+                                turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_HORA_TURNO));
+                                turnos.setCentro(json_data.getString(JSONConstants.JSON_CENTRO));
+                                turnos.setConsultorio(json_data.getString(JSONConstants.JSON_CONSULTORIO));
+                                turnos.setCobertura(json_data.getString(JSONConstants.JSON_COBERTURA));
+                                turnos.setPreparacion(json_data.getString(JSONConstants.JSON_PREPARACION));
+                                //if(json_data.getString(JSONConstants.JSON_ESCONSULTA.toLowerCase()).equals("true")) {
+                                turnos.setEsConsulta(true);
+                                //} else {
+                                //    turnos.setEsConsulta(false);
+                                //}
+                                // Estos son para la lista
+                                turnos.setMedico(json_data.getString(JSONConstants.JSON_MEDICO));
+                                turnos.setEspecialidad(json_data.getString(JSONConstants.JSON_ESPECIALIDAD));
+                                turnos.setFechaTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+
+                                //db.newTurno(turnos);
+                                datosTurno.add(turnos);
+
+
+                            }
+
+                            return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+            if(success!=null) {
+                if(success.equals("1")){
+                    // Set adapter
+                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    recView.setAdapter(adapter);
+
+                } else {
+
+                    Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
+                    TurnosAdapter adapter = new TurnosAdapter(datosTurno);
+                    recView.setAdapter(adapter);
+
+                }
+            } else {
+                Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
+            }
+            db.close();
+            datosTurno = null;
+        }
+
+    }
+
 }

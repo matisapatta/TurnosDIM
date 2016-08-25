@@ -18,6 +18,7 @@ public class WSConstants {
         public static final String WS_COMANDO_MISTURNOS = "comando=demo_mis_turnos";
         public static final String WS_COMANDO_GETESPECIALIDADES = "comando=demo_Get_especialidades";
         public static final String WS_COMANDO_GETMEDICOXESPECIALIDAD = "comando=demo_GetEspMedicosXidEspecialidad";
+        public static final String WS_COMANDO_GETTURNOSCONSULTAS = "comando=demo_GetTurnosDisponibleConsultas";
         public static final String WS_COMANDO_MISDATOS = "comando=demo_mis_datos";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
@@ -29,6 +30,11 @@ public class WSConstants {
         public static final String WS_FECHA_NAC = "&fechanacimiento=";
         public static final String WS_EMAIL = "&email=";
         public static final String WS_ESPECIALIDAD = "&especialidad=";
+        public static final String WS_IDESPECIALIDAD = "&idespecialidad=";
+        public static final String WS_IDMEDICO = "&idmedico=";
+        public static final String WS_IDOBRASOCIAL = "&idobrasocial=";
+
+
     }
 
 }
