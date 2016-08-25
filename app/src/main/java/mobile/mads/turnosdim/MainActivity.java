@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+
                 WSConstants.StringConstants.WS_FORMATO;
         new HttpRequestTask().execute();
-
 
     }
 
