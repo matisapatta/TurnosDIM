@@ -72,6 +72,7 @@ public class NuevaConsultaFragment extends Fragment {
     private RecyclerView recView;
     private ArrayList<TurnosStruct> datosTurno;
     private TurnosStruct turnos;
+    private String idmed;
 
 
     public NuevaConsultaFragment() {
@@ -158,6 +159,7 @@ public class NuevaConsultaFragment extends Fragment {
         spinnerMedicos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                idmed = dataMed.get(position).getIdObj();
                 recView.setAdapter(null);
             }
 
@@ -170,6 +172,7 @@ public class NuevaConsultaFragment extends Fragment {
         btnBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recView.setAdapter(null);
                 ObjectStruct esp = dataEsp.get(spinnerEspecialidades.getSelectedItemPosition());
                 ObjectStruct med = dataMed.get(spinnerMedicos.getSelectedItemPosition());
 
@@ -468,14 +471,14 @@ public class NuevaConsultaFragment extends Fragment {
             if(success!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity(),idmed);
                     recView.setAdapter(adapter);
 
                 } else {
-
                     Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
-                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
-                    recView.setAdapter(adapter);
+                   // NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
+                   // recView.setAdapter(adapter);
+                    recView.setAdapter(null);
 
                 }
             } else {

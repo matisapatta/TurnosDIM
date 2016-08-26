@@ -25,11 +25,13 @@ public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdap
 
     private ArrayList<TurnosStruct> datos;
     private FragmentActivity context;
+    private String idmed;
 
 
-    public NuevaConsultaAdapter(ArrayList<TurnosStruct> datos, FragmentActivity context) {
+    public NuevaConsultaAdapter(ArrayList<TurnosStruct> datos, FragmentActivity context, String idmed) {
         this.datos = datos;
         this.context = context;
+        this.idmed = idmed;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdap
                 intent.putExtras(b);
                 v.getContext().startActivity(intent);*/
                 FragmentManager fragmentManager = context.getSupportFragmentManager();
-                DialogFragment dialog = new NuevoTurnoDialog().newInstance(datos.get(i));
+                DialogFragment dialog = new NuevoTurnoDialog().newInstance(datos.get(i),idmed);
                 dialog.show(context.getSupportFragmentManager(),"NuevoTurnoDialog");
 
             }
