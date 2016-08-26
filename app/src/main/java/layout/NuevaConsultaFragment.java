@@ -468,13 +468,13 @@ public class NuevaConsultaFragment extends Fragment {
             if(success!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno);
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
                     recView.setAdapter(adapter);
 
                 } else {
 
                     Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
-                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno);
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
                     recView.setAdapter(adapter);
 
                 }

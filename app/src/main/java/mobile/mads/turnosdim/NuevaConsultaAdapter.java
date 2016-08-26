@@ -1,7 +1,8 @@
 package mobile.mads.turnosdim;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Context;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
+import layout.NuevoTurnoDialog;
+
 /**
  * Created by mati on 8/25/16.
  */
@@ -19,10 +22,12 @@ import java.util.Date;
 public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdapter.TurnosViewHolder> {
 
     private ArrayList<TurnosStruct> datos;
+    private FragmentActivity context;
 
 
-    public NuevaConsultaAdapter(ArrayList<TurnosStruct> datos) {
+    public NuevaConsultaAdapter(ArrayList<TurnosStruct> datos, FragmentActivity context) {
         this.datos = datos;
+        this.context = context;
     }
 
     @Override
@@ -40,6 +45,8 @@ public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdap
                 intent.putExtras(b);
                 v.getContext().startActivity(intent);*/
                 Toast.makeText(v.getContext(),"HOLA",Toast.LENGTH_LONG).show();
+                DialogFragment dialog = new NuevoTurnoDialog().newInstance(datos.get(i));
+                dialog.show(context.getSupportFragmentManager(),"NuevoTurnoDialog");
             }
 
         });
@@ -58,6 +65,10 @@ public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdap
     public int getItemCount() {
         return datos.size();
     }
+
+
+
+
 
     public static class TurnosViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
