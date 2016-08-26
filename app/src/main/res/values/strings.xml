@@ -28,6 +28,7 @@
     <string name="addtocalendar">Agregar a calendario</string>
     <string name="selectEsp">Seleccione la especialidad:</string>
     <string name="selectMed">Seleccione el médico:</string>
+    <string name="nuevaConsulta">Confirmar el turno</string>
 
     <string-array name="especialidadesArray">
         <item>Clínica Médica</item>

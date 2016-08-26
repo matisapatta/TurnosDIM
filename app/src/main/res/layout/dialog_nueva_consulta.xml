@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dialogturnoslayout"
+    >
+
+    <TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintTop_toTopOf="@+id/dialogturnoslayout"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogturnoslayout"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="16dp">
+        <TableRow>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorPrimaryDark"
+                >
+
+                <TextView android:id="@+id/lblDiaDialogo"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Mie"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    />
+
+                <TextView android:id="@+id/lblNumDiaDialogo"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:text= "06"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    />
+
+                <TextView android:id="@+id/lblMesDialogo"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:text="Abril"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView android:id="@+id/lblMedicoDialogo"
+                    android:gravity="center_horizontal"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Medico dfgjkdgj dkjfgdjfgk "
+                    />
+
+                <TextView android:id="@+id/lblEspecialidadDialogo"
+                    android:gravity="center"
+                    android:layout_marginLeft="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:text= "especialidad dfgdfgd dgdfgdf"
+                    />
+
+                <TextView android:id="@+id/lblHoraDialogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:text="fecha"
+                    />
+
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:text="Aceptar Turno"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:id="@+id/btnAceptar"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/dialogturnoslayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogturnoslayout"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintTop_toTopOf="@+id/dialogturnoslayout" />
+
+    <Button
+        android:text="Cancelar Turno"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:id="@+id/btnCancelar"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/dialogturnoslayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogturnoslayout"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnAceptar" />
+
+
+</android.support.constraint.ConstraintLayout>

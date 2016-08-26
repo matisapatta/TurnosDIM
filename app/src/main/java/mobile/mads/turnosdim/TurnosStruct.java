@@ -1,12 +1,15 @@
 package mobile.mads.turnosdim;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by mati on 8/19/16.
  */
 
-public class TurnosStruct {
+public class TurnosStruct  implements Parcelable {
 
     private int id;
     private String idTurno;
@@ -156,5 +159,49 @@ public class TurnosStruct {
 
     public void setPracticas(ObjectStruct practicas) {
         this.practicas = practicas;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags){
+        out.writeInt(id);
+        out.writeString(idTurno);
+        out.writeString(fechaTurno);
+        out.writeString(horaTurno);
+        out.writeString(medico);
+        out.writeString(especialidad);
+        out.writeString(centro);
+        out.writeString(consultorio);
+        out.writeString(cobertura);
+        out.writeString(preparacion);
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<TurnosStruct> CREATOR = new Parcelable.Creator<TurnosStruct>() {
+        public TurnosStruct createFromParcel(Parcel in) {
+            return new TurnosStruct (in);
+        }
+
+        public TurnosStruct[] newArray(int size) {
+            return new TurnosStruct[size];
+        }
+    };
+
+    private TurnosStruct(Parcel in){
+        this.id = in.readInt();
+        this.idTurno = in.readString();
+        this.fechaTurno = in.readString();
+        this.horaTurno = in.readString();
+        this.medico = in.readString();
+        this.especialidad = in.readString();
+        this.centro = in.readString();
+        this.consultorio = in.readString();
+        this.cobertura = in.readString();
+        this.preparacion = in.readString();
+
     }
 }

@@ -3,6 +3,8 @@ package mobile.mads.turnosdim;
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,9 +46,10 @@ public class NuevaConsultaAdapter extends RecyclerView.Adapter<NuevaConsultaAdap
                 b.putString("IDTURNO",datos.get(i).getIdTurno());
                 intent.putExtras(b);
                 v.getContext().startActivity(intent);*/
-                Toast.makeText(v.getContext(),"HOLA",Toast.LENGTH_LONG).show();
+                FragmentManager fragmentManager = context.getSupportFragmentManager();
                 DialogFragment dialog = new NuevoTurnoDialog().newInstance(datos.get(i));
                 dialog.show(context.getSupportFragmentManager(),"NuevoTurnoDialog");
+
             }
 
         });
