@@ -105,17 +105,7 @@ public class NuevoTurnoDialog extends android.support.v4.app.DialogFragment {
         textHora.setText(turno.getHoraTurno());
 
 
-        builder.setTitle(R.string.nuevaConsulta)
-                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
+        builder.setTitle(R.string.nuevaConsulta);
         // Create the AlertDialog object and return it
         final AlertDialog dialog =  builder.create();
 
