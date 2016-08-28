@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dialogcancelarturno">
+
+    <Button
+        android:text="Cancelar Turno"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:id="@+id/btnCancelarTurno"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogcancelarturno"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/dialogcancelarturno"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="96dp"
+        app:layout_constraintTop_toTopOf="@+id/dialogcancelarturno" />
+
+    <Button
+        android:text="Salir"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:id="@+id/btnSalir"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/dialogcancelarturno"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogcancelarturno"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnCancelarTurno" />
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerRazones"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toTopOf="@+id/dialogcancelarturno"
+        app:layout_constraintLeft_toLeftOf="@+id/dialogcancelarturno"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/dialogcancelarturno"
+        android:layout_marginRight="16dp"
+
+        />
+
+</android.support.constraint.ConstraintLayout>
