@@ -67,8 +67,12 @@
 
         <Button
             android:text="@string/loginBtn"
+            android:background="@drawable/button_simple"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
             android:id="@+id/loginBtn"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="@+id/activity_entry"
@@ -80,7 +84,10 @@
             android:layout_marginBottom="192dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/loginDNI"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"/>
+
+
+
 
     </android.support.constraint.ConstraintLayout>
 </RelativeLayout>

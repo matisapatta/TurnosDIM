@@ -5,13 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import database.DBManager;
 import mobile.mads.turnosdim.R;
@@ -84,7 +81,7 @@ public class NuevoTurnoFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        btn1 = (Button)getView().findViewById(R.id.btnTest);
+        btn1 = (Button)getView().findViewById(R.id.btnEstudios);
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +89,7 @@ public class NuevoTurnoFragment extends Fragment {
                 transaction.beginTransaction().replace(R.id.content_main,NuevaPracticaFragment.newInstance("","")).commit();
             }
         });
-        btn2 = (Button)getView().findViewById(R.id.btnTest2);
+        btn2 = (Button)getView().findViewById(R.id.btnConsulta);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
