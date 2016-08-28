@@ -198,4 +198,10 @@
         app:layout_constraintLeft_toLeftOf="@+id/activity_detalle_turno"
         android:layout_marginLeft="136dp" />
 
+    <ExpandableListView
+        android:layout_width="191dp"
+        android:layout_height="36dp"
+        tools:layout_editor_absoluteY="398dp"
+        tools:layout_editor_absoluteX="114dp" />
+
 </android.support.constraint.ConstraintLayout>

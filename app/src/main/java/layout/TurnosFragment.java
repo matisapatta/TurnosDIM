@@ -17,6 +17,7 @@ import database.DBManager;
 import mobile.mads.turnosdim.EntryActivity;
 import mobile.mads.turnosdim.JSONConstants;
 import mobile.mads.turnosdim.MainActivity;
+import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.ServiceHandler;
 import mobile.mads.turnosdim.TurnosAdapter;
@@ -149,6 +150,7 @@ public class TurnosFragment extends Fragment {
     public void onStart(){
         super.onStart();
         db.deleteTurnos();
+        db.deletePractias();
         datosTurno = new ArrayList<TurnosStruct>();
         recView = (RecyclerView)getActivity().findViewById(R.id.turnosRecView);
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
@@ -219,6 +221,7 @@ public class TurnosFragment extends Fragment {
 
                         JSONObject jsonObject = new JSONObject(jsonData);
                         JSONObject json_data;
+                        JSONObject json_practicas;
 
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
                         if(success.equals("1")){
@@ -241,6 +244,14 @@ public class TurnosFragment extends Fragment {
                                     turnos.setMedico(json_data.getString(JSONConstants.JSON_MEDICO));
                                     turnos.setEspecialidad(json_data.getString(JSONConstants.JSON_ESPECIALIDAD));
                                     turnos.setFechaTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+                                    JSONArray jPracticas = json_data.getJSONArray("Practicas");
+                                    for(int j=0;j<jPracticas.length();j++){
+                                        json_practicas = jPracticas.getJSONObject(j);
+                                        ObjectStruct practicas = new ObjectStruct();
+                                        practicas.setIdObj(json_practicas.getString(JSONConstants.JSON_IDNOMENCLADOR));
+                                        practicas.setDescripcion(json_practicas.getString(JSONConstants.JSON_DESCRIPCION));
+                                        db.nuevaPractica(practicas, turnos.getIdTurno());
+                                    }
 
                                     db.newTurno(turnos);
                                     datosTurno.add(turnos);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.Observable;
 
+import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.TurnosStruct;
 
@@ -119,6 +120,19 @@ public class DBManager extends Observable {
         notifyObservers();
     }
 
+    public void nuevaPractica(ObjectStruct practica, String idTurno){
+        SQLiteDatabase db = b.getWritableDatabase();
+        ContentValues registry = new ContentValues();
+        registry.put(DBLayout.DBConstants.PRACTICAS_TABLE_IDTURNO,idTurno);
+        registry.put(DBLayout.DBConstants.PRACTICAS_TABLE_IDNOMENCLADOR,practica.getIdObj());
+        registry.put(DBLayout.DBConstants.PRACTICAS_TABLE_DESCRIPCION,practica.getDescripcion());
+        db.insert(DBLayout.DBConstants.PRACTICAS_TABLE, null, registry);
+        registry.clear();
+        setChanged();
+        notifyObservers();
+
+    }
+
     public void updatePaciente(int id, Paciente paciente){
         SQLiteDatabase db = b.getWritableDatabase();
         ContentValues registry = new ContentValues();
@@ -164,6 +178,7 @@ public class DBManager extends Observable {
         SQLiteDatabase db = b.getWritableDatabase();
         db.delete(DBLayout.DBConstants.USER_TABLE, null, null);
         db.delete(DBLayout.DBConstants.TURNOS_TABLE, null, null);
+        db.delete(DBLayout.DBConstants.PRACTICAS_TABLE,null,null);
         setChanged();
         notifyObservers();
     }
@@ -176,6 +191,16 @@ public class DBManager extends Observable {
         notifyObservers();
 
     }
+
+    public void deletePractias(){
+
+        SQLiteDatabase db = b.getWritableDatabase();
+        db.delete(DBLayout.DBConstants.PRACTICAS_TABLE, null, null);
+        setChanged();
+        notifyObservers();
+
+    }
+
 
 
     public void close(){
