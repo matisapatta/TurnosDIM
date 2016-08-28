@@ -22,6 +22,7 @@ public class WSConstants {
         public static final String WS_COMANDO_MISDATOS = "comando=demo_mis_datos";
         public static final String WS_COMANDO_DARCONSULTA = "comando=demo_DarTurnoConsulta";
         public static final String WS_COMANDO_CANCELARTURNOMOTIVOS = "comando=demo_CancelarTurnoMotivos";
+        public static final String WS_COMANDO_CANCELARTURNO = "comando=demo_CancelarTurno";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
         public static final String WS_PASS = "&pass=";
@@ -36,6 +37,8 @@ public class WSConstants {
         public static final String WS_IDMEDICO = "&idmedico=";
         public static final String WS_IDOBRASOCIAL = "&idobrasocial=";
         public static final String WS_IDPLAN = "&idplan=";
+        public static final String WS_IDMOTIVOCANCELACION = "&idmotivocancelacion=";
+        public static final String WS_IDTURNO = "&idturno=";
 
 
 

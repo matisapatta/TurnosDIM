@@ -3,6 +3,7 @@ package mobile.mads.turnosdim;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import database.DBManager;
-
+import layout.CancelarTurnoDialog;
 
 public class DetalleTurno extends AppCompatActivity {
 
@@ -37,7 +38,8 @@ public class DetalleTurno extends AppCompatActivity {
     private Date dateObj;
     private String success;
     private Paciente paciente;
-    private ArrayList<String> razonesCancel;
+    private ArrayList<ObjectStruct> razonesCancel;
+    private ArrayList<String> razonesText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,7 @@ public class DetalleTurno extends AppCompatActivity {
         @Override
         protected void onPreExecute()
         {
-            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog = new ProgressDialog(DetalleTurno.this);
             progressDialog.setMessage(getApplicationContext().getResources().getString(R.string.loading));
             progressDialog.show();
         }
@@ -149,16 +151,20 @@ public class DetalleTurno extends AppCompatActivity {
 
                         JSONObject jsonObject = new JSONObject(jsonData);
                         JSONObject json_data;
-                        razonesCancel = new ArrayList<>();
-                        //JSONObject json_practicas;
+                        razonesCancel = new ArrayList<ObjectStruct>();
+                        razonesText = new ArrayList<>();
 
                         success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
                         if(success.equals("1")){
                             JSONArray jArray = jsonObject.getJSONArray("items");
-                            for(int i=0;i<jArray.length();i++){
-                                json_data = jArray.getJSONObject(i);
 
-                                razonesCancel.add(json_data.getString(JSONConstants.JSON_DESCRIPCION));
+                            for(int i=0;i<jArray.length();i++){
+                                ObjectStruct razon = new ObjectStruct();
+                                json_data = jArray.getJSONObject(i);
+                                razon.setIdObj(json_data.getString(JSONConstants.JSON_ID));
+                                razon.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION));
+                                razonesText.add(razon.getDescripcion());
+                                razonesCancel.add(razon);
                             }
 
                             return success;
@@ -188,13 +194,10 @@ public class DetalleTurno extends AppCompatActivity {
             if(success!=null) {
                 if(success.equals("1")){
                     // Set adapter
-
-
+                    DialogFragment dialog = new CancelarTurnoDialog().newInstance(razonesCancel,razonesText,turno.getIdTurno());
+                    dialog.show(DetalleTurno.this.getSupportFragmentManager(),"CancelarTurnoDialog");
                 } else {
-
                     Toast.makeText(getApplicationContext(), string,Toast.LENGTH_LONG).show();
-
-
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
