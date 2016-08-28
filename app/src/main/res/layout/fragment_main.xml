@@ -9,31 +9,37 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ScrollView
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/pager"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentMain">
-        <TextView
-            android:text="Fragment Main"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fragmentMainText"
-            android:layout_gravity="top|center_horizontal"
-             />
+            android:orientation="vertical">
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_gravity="top"
+                app:layout_constraintLeft_toLeftOf="@+id/fragmentMain"
+                app:layout_constraintTop_toTopOf="@+id/fragmentMain"
+                android:background="#878789">
+            </android.support.v4.view.ViewPager>
+            <TextView
+                android:text="Fragment Main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragmentMainText"
+                android:layout_gravity="top|center_horizontal"
+                />
+        </LinearLayout>
+
 
 
     </ScrollView>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="360dp"
-        android:layout_height="200dp"
-        android:layout_gravity="top"
-        app:layout_constraintLeft_toLeftOf="@+id/fragmentMain"
-        app:layout_constraintTop_toTopOf="@+id/fragmentMain"
-        android:background="#878789">
-    </android.support.v4.view.ViewPager>
+
 
 
 

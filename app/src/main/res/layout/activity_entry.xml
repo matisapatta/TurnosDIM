@@ -1,83 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_entry"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mobile.mads.turnosdim.EntryActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_entry"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
-        app:layout_constraintRight_toRightOf="@+id/activity_entry"
-        app:layout_constraintTop_toTopOf="@+id/activity_entry"
-        app:layout_constraintVertical_bias="0.06"
-        android:id="@+id/textView" />
-
-
-    <EditText
-        android:layout_width="338dp"
-        android:layout_height="39dp"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/loginDNI"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_entry"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
-        android:layout_marginLeft="16dp"
-        android:hint="@string/loginDNI"
-
-        android:layout_marginTop="128dp"
-        app:layout_constraintTop_toTopOf="@+id/activity_entry"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_entry"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:layout_width="338dp"
-        android:layout_height="41dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/loginPassword"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_entry"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
-        android:layout_marginLeft="16dp"
-        android:hint="@string/loginPass"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/loginDNI"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:text="@string/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginBtn"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="@+id/activity_entry"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_entry"
-        android:layout_marginBottom="192dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/loginDNI"
-        app:layout_constraintVertical_bias="1.0" />
+    android:id="@+id/background" >
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -85,6 +11,76 @@
         android:layout_height="match_parent"
         android:src="@drawable/background_login"
         android:scaleType="fitCenter"
-        />
+        android:layout_alignParentTop="true">
 
-</android.support.constraint.ConstraintLayout>
+    </ImageView>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_entry"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="mobile.mads.turnosdim.EntryActivity"
+        android:background="#00ffffff">
+
+        <EditText
+            android:layout_width="338dp"
+            android:layout_height="39dp"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/loginDNI"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="@+id/activity_entry"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
+            android:layout_marginLeft="16dp"
+            android:hint="@string/loginDNI"
+
+            android:layout_marginTop="128dp"
+            app:layout_constraintTop_toTopOf="@+id/activity_entry"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_entry"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:layout_width="338dp"
+            android:layout_height="41dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/loginPassword"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="@+id/activity_entry"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
+            android:layout_marginLeft="16dp"
+            android:hint="@string/loginPass"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/loginDNI"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:text="@string/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginBtn"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="@+id/activity_entry"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="@+id/activity_entry"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/activity_entry"
+            android:layout_marginBottom="192dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/loginDNI"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>
