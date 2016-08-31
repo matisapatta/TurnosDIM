@@ -86,7 +86,8 @@ public class NuevoTurnoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager transaction = getActivity().getSupportFragmentManager();
-                transaction.beginTransaction().replace(R.id.content_main,NuevaPracticaFragment.newInstance("","")).commit();
+                transaction.beginTransaction().replace(R.id.content_main,NuevaPracticaFragment.newInstance("",""))
+                        .addToBackStack(null).commit();
             }
         });
         btn2 = (Button)getView().findViewById(R.id.btnConsulta);
@@ -94,11 +95,13 @@ public class NuevoTurnoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager transaction = getActivity().getSupportFragmentManager();
-                transaction.beginTransaction().replace(R.id.content_main,NuevaConsultaFragment.newInstance("","")).commit();
+                transaction.beginTransaction().replace(R.id.content_main,NuevaConsultaFragment.newInstance("",""))
+                        .addToBackStack(null).commit();
             }
         });
 
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

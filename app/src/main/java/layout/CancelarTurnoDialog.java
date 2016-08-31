@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -186,6 +188,9 @@ public class CancelarTurnoDialog extends DialogFragment {
             if(string!=null) {
                 if(success.equals("1")){
                     Toast.makeText(context, string,Toast.LENGTH_LONG).show();
+                    FragmentManager transaction = ((FragmentActivity)context).getSupportFragmentManager();
+                    transaction.beginTransaction().replace(R.id.content_main,NuevoTurnoFragment.newInstance())
+                            .commit();
                 } else {
                     Toast.makeText(context,"Se ha producido un error al guardar el turno" ,Toast.LENGTH_LONG).show();
                 }

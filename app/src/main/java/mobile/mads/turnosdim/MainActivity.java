@@ -173,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         }
 
         // Insert the fragment by replacing any existing fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, selectedFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main, selectedFragment)
+                .addToBackStack(null).commit();
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
