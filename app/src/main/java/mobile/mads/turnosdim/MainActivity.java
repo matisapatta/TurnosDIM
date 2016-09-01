@@ -77,9 +77,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         nvDrawer = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
         setupDrawerContent(nvDrawer);
-        selectedFragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction()
-             .replace(R.id.content_main, selectedFragment).commit();
         db = new DBManager(this);
         paciente = new Paciente();
         paciente = db.getPaciente(this);
@@ -88,6 +85,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 WSConstants.StringConstants.WS_FORMATO;
         new HttpRequestTask().execute();
 
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        selectedFragment = new MainFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, selectedFragment).commit();
     }
 
     @Override
@@ -163,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 finish();
                 break;
             default:
-                fragmentClass = MainFragment.class;
+                fragmentClass = LocationsFragment.class;
         }
 
         try {
