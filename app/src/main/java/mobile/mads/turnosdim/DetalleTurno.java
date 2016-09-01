@@ -48,11 +48,11 @@ public class DetalleTurno extends AppCompatActivity {
 
         contentMedico = (TextView)findViewById(R.id.contentMedico);
         contentEspecialidad = (TextView)findViewById(R.id.contentEspecialidad);
-        //contentFecha = (TextView)findViewById(R.id.contentFecha);
-        //contentCentro = (TextView)findViewById(R.id.contentCentro);
-        //contentConsultorio = (TextView)findViewById(R.id.contentConsultorio);
-        //contentCobertura = (TextView)findViewById(R.id.contentCobertura);
-        //contentPreparacion = (TextView)findViewById(R.id.contentPreparacion);
+        contentFecha = (TextView)findViewById(R.id.contentFecha);
+        contentCentro = (TextView)findViewById(R.id.contentCentro);
+        contentConsultorio = (TextView)findViewById(R.id.contentConsultorio);
+        contentCobertura = (TextView)findViewById(R.id.contentCobertura);
+        contentPreparacion = (TextView)findViewById(R.id.contentPreparacion);
         btnCalendar = (Button)findViewById(R.id.btnSaveCalendar);
         btnCancelarTurno = (Button)findViewById(R.id.btnDelete);
 
