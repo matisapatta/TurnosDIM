@@ -23,12 +23,14 @@ public class WSConstants {
         public static final String WS_COMANDO_DARCONSULTA = "comando=demo_DarTurnoConsulta";
         public static final String WS_COMANDO_CANCELARTURNOMOTIVOS = "comando=demo_CancelarTurnoMotivos";
         public static final String WS_COMANDO_CANCELARTURNO = "comando=demo_CancelarTurno";
+        public static final String WS_COMANDO_PACIENTE_GUARDAR_DATOS = "comando=demo_PacienteGuardarDatos";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
         public static final String WS_PASS = "&pass=";
         public static final String WS_FORMATO = "&formato=indented";
         public static final String WS_ID_PACIENTE = "&idpaciente=";
         public static final String WS_TELEFONO = "&telefono=";
+        public static final String WS_TELEFONOADICIONAL = "&telefonoadicional=";
         public static final String WS_SEXO = "&sexo=";
         public static final String WS_FECHA_NAC = "&fechanacimiento=";
         public static final String WS_EMAIL = "&email=";

@@ -2,6 +2,7 @@
 <resources>
     <color name="naranjaFuerte">#f26822</color>
     <color name="grisClaro">#d1d1d1</color>
+    <color name="grisMasClaro">#b0b0b0</color>
     <color name="grisOscuro">#878789</color>
     <color name="naranjaClaro">#ffb995</color>
 </resources>

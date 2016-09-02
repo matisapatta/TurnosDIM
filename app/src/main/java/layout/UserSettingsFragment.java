@@ -157,11 +157,23 @@ public class UserSettingsFragment extends Fragment {
                 tel.setEnabled(true);
                 telad.setEnabled(true);
                 email.setEnabled(true);
-                tel.setBackground(null);
-                telad.setBackground(null);
-                email.setBackground(null);
+                tel.setBackground(getActivity().getResources().getDrawable(R.drawable.background_editable));
+                telad.setBackground(getActivity().getResources().getDrawable(R.drawable.background_editable));
+                email.setBackground(getActivity().getResources().getDrawable(R.drawable.background_editable));
                 edit.setVisibility(View.INVISIBLE);
                 save.setVisibility(View.VISIBLE);
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                url = WSConstants.StringConstants.WS_URL+ WSConstants.StringConstants.WS_COMANDO_PACIENTE_GUARDAR_DATOS+
+                        WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
+                        paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_TELEFONOADICIONAL+telad.getText()+
+                        WSConstants.StringConstants.WS_FECHA_NAC+fnac.getText()+ WSConstants.StringConstants.WS_SEXO+sexo.getText()+
+                        WSConstants.StringConstants.WS_EMAIL+email.getText();
+                //new HttpRequestTask2().execute(url);
             }
         });
 
