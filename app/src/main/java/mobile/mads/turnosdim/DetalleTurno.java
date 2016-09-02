@@ -125,6 +125,9 @@ public class DetalleTurno extends AppCompatActivity {
     }
 
 
+
+
+
     public class HttpRequestTask extends AsyncTask<String , Void, String> {
         //Before running code in separate thread
         private ProgressDialog progressDialog;
