@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,7 +175,7 @@ public class UserSettingsFragment extends Fragment {
                         paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_TELEFONOADICIONAL+telad.getText()+
                         WSConstants.StringConstants.WS_FECHA_NAC+fnac.getText()+ WSConstants.StringConstants.WS_SEXO+sexo.getText()+
                         WSConstants.StringConstants.WS_EMAIL+email.getText();
-                //new HttpRequestTask2().execute(url);
+                new HttpRequestTask2().execute(url);
             }
         });
 
@@ -296,4 +298,68 @@ public class UserSettingsFragment extends Fragment {
         }
 
     }
+
+    public class HttpRequestTask2 extends AsyncTask<String , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(params[0]);
+
+                if(jsonData!=null){
+                    try {
+                        // Manejo de Array en JSON
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+            if(string!=null) {
+                if(success.equals("1")){
+                    Toast.makeText(getActivity(), string,Toast.LENGTH_LONG).show();
+                    FragmentManager transaction = ((FragmentActivity)getContext()).getSupportFragmentManager();
+                    transaction.beginTransaction().replace(R.id.content_main,UserSettingsFragment.newInstance())
+                            .commit();
+                } else {
+                    Toast.makeText(getActivity(),"Se ha producido un error al guardar el turno" ,Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
 }
+
