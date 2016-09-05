@@ -23,6 +23,7 @@ import database.DBManager;
 public class EntryActivity extends AppCompatActivity {
 
     private Button loginBtn;
+    private Button newUserBtn;
     private String success;
     private EditText dniTxt;
     private EditText passTxt;
@@ -41,6 +42,7 @@ public class EntryActivity extends AppCompatActivity {
         loginBtn=(Button)findViewById(R.id.loginBtn);
         dniTxt=(EditText)findViewById(R.id.loginDNI);
         passTxt=(EditText)findViewById(R.id.loginPassword);
+        newUserBtn=(Button)findViewById(R.id.newUserBtn);
 
         // Inicializo la DB
         db = new DBManager(getApplicationContext());
@@ -68,6 +70,13 @@ public class EntryActivity extends AppCompatActivity {
                 dni = dniTxt.getText().toString();
                 new HttpRequestTask().execute();
 
+            }
+        });
+        newUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EntryActivity.this,RegisterActivity.class);
+                startActivity(i);
             }
         });
     }
