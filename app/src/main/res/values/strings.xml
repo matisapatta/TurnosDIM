@@ -41,6 +41,10 @@
         <item>Oftalmología</item>
         <item>Urología</item>
     </string-array>
+    <string-array name="sexoArray">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

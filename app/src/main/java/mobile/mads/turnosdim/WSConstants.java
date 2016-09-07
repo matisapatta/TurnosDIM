@@ -24,6 +24,8 @@ public class WSConstants {
         public static final String WS_COMANDO_CANCELARTURNOMOTIVOS = "comando=demo_CancelarTurnoMotivos";
         public static final String WS_COMANDO_CANCELARTURNO = "comando=demo_CancelarTurno";
         public static final String WS_COMANDO_PACIENTE_GUARDAR_DATOS = "comando=demo_PacienteGuardarDatos";
+        public static final String WS_COMANDO_GET_PLANES = "comando=demo_Get_PlanesDeObraSocial";
+        public static final String WS_COMANDO_GET_OBRASOCIAL = "comando=demo_Get_ObraSocialesActivas";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
         public static final String WS_PASS = "&pass=";
@@ -41,6 +43,9 @@ public class WSConstants {
         public static final String WS_IDPLAN = "&idplan=";
         public static final String WS_IDMOTIVOCANCELACION = "&idmotivocancelacion=";
         public static final String WS_IDTURNO = "&idturno=";
+        public static final String FIXED_TOKEN = "a00e7719-6645-42ba-bcc0-fe4f03ea2927";
+        public static final String FIXED_IDPACIENTE = "111111";
+
 
 
 
