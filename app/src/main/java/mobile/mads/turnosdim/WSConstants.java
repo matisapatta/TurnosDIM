@@ -26,6 +26,8 @@ public class WSConstants {
         public static final String WS_COMANDO_PACIENTE_GUARDAR_DATOS = "comando=demo_PacienteGuardarDatos";
         public static final String WS_COMANDO_GET_PLANES = "comando=demo_Get_PlanesDeObraSocial";
         public static final String WS_COMANDO_GET_OBRASOCIAL = "comando=demo_Get_ObraSocialesActivas";
+        public static final String WS_COMANDO_GET_ESTUDIOSMEDICOS = "comando=demo_GetEstudiosMedicos";
+        public static final String WS_COMANDO_GET_TURNOSPRACTICA = "comando=demo_GetTurnosDisponibleDelGrupo";
         public static final String WS_DNI = "&dni=";
         public static final String WS_TOKEN = "&token=";
         public static final String WS_PASS = "&pass=";

@@ -1,14 +1,37 @@
 package layout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import database.DBManager;
+import mobile.mads.turnosdim.JSONConstants;
+import mobile.mads.turnosdim.NuevaConsultaAdapter;
+import mobile.mads.turnosdim.ObjectStruct;
+import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.R;
+import mobile.mads.turnosdim.ServiceHandler;
+import mobile.mads.turnosdim.TurnosStruct;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +50,20 @@ public class NuevaPracticaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button btnBuscar;
+    private EditText txtPractica;
+    private RecyclerView recView;
+    private ObjectStruct oPractica;
+    private ArrayList<ObjectStruct> arrayPractica;
+    private ArrayList<TurnosStruct> datosTurno;
+    private TurnosStruct turnos;
+    private Paciente paciente;
+    private DBManager db;
+    private String success;
+    private String url;
+    private String idmed;
+    private Spinner spinnerPractica;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,6 +105,25 @@ public class NuevaPracticaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_nueva_practica, container, false);
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        spinnerPractica = (Spinner)getActivity().findViewById(R.id.spinnerPractica);
+        btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscarPractica);
+        txtPractica = (EditText)getActivity().findViewById(R.id.textPractica);
+        recView = (RecyclerView)getActivity().findViewById(R.id.nuevaPracticaRecView);
+        db = new DBManager(getContext());
+        paciente = db.getPaciente(getContext());
+
+        txtPractica.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                return false;
+            }
+        });
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -105,5 +161,108 @@ public class NuevaPracticaFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class HttpRequestTaskTurnos extends AsyncTask<String , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(params[0]);
+
+                if(jsonData!=null){
+                    try {
+                        // Manejo de Array en JSON
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        JSONObject json_data;
+                        datosTurno = new ArrayList<TurnosStruct>();
+
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            JSONArray jArray = jsonObject.getJSONArray("Turnos");
+                            for(int i=0;i<jArray.length();i++){
+                                json_data = jArray.getJSONObject(i);
+                                turnos = new TurnosStruct();
+
+                                turnos.setIdTurno(json_data.getString(JSONConstants.JSON_ID_TURNO));
+                                turnos.setHoraTurno(json_data.getString(JSONConstants.JSON_HORA_TURNO));
+                                turnos.setCentro(json_data.getString(JSONConstants.JSON_CENTRO));
+                                turnos.setConsultorio(json_data.getString(JSONConstants.JSON_CONSULTORIO));
+                                turnos.setCobertura(json_data.getString(JSONConstants.JSON_COBERTURA));
+                                turnos.setPreparacion(json_data.getString(JSONConstants.JSON_PREPARACION));
+                                //if(json_data.getString(JSONConstants.JSON_ESCONSULTA.toLowerCase()).equals("true")) {
+                                turnos.setEsConsulta(true);
+                                //} else {
+                                //    turnos.setEsConsulta(false);
+                                //}
+                                // Estos son para la lista
+                                turnos.setMedico(json_data.getString(JSONConstants.JSON_MEDICO));
+                                turnos.setEspecialidad(json_data.getString(JSONConstants.JSON_ESPECIALIDAD));
+                                turnos.setFechaTurno(json_data.getString(JSONConstants.JSON_FECHA_TURNO));
+
+                                //db.newTurno(turnos);
+                                datosTurno.add(turnos);
+
+
+                            }
+
+                            return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+            if(success!=null) {
+                if(success.equals("1")){
+                    // Set adapter
+                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity(),idmed);
+                    recView.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
+                    // NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity());
+                    // recView.setAdapter(adapter);
+                    recView.setAdapter(null);
+
+                }
+            } else {
+                Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
+            }
+            db.close();
+            datosTurno = null;
+        }
+
     }
 }
