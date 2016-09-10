@@ -45,8 +45,10 @@ public class WSConstants {
         public static final String WS_IDPLAN = "&idplan=";
         public static final String WS_IDMOTIVOCANCELACION = "&idmotivocancelacion=";
         public static final String WS_IDTURNO = "&idturno=";
+        public static final String WS_FILTRO = "&filtro=";
         public static final String FIXED_TOKEN = "a00e7719-6645-42ba-bcc0-fe4f03ea2927";
         public static final String FIXED_IDPACIENTE = "111111";
+
 
 
 

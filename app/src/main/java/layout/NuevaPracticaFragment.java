@@ -7,11 +7,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import database.DBManager;
+import mobile.mads.turnosdim.CustomSpinnerAdapter;
 import mobile.mads.turnosdim.JSONConstants;
 import mobile.mads.turnosdim.NuevaConsultaAdapter;
 import mobile.mads.turnosdim.ObjectStruct;
@@ -32,6 +36,7 @@ import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.R;
 import mobile.mads.turnosdim.ServiceHandler;
 import mobile.mads.turnosdim.TurnosStruct;
+import mobile.mads.turnosdim.WSConstants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,8 +59,9 @@ public class NuevaPracticaFragment extends Fragment {
     private Button btnBuscar;
     private EditText txtPractica;
     private RecyclerView recView;
-    private ObjectStruct oPractica;
-    private ArrayList<ObjectStruct> arrayPractica;
+    private ObjectStruct practica;
+    private ArrayList<ObjectStruct> dataPractica;
+    private ArrayList<String> arrayPractica;
     private ArrayList<TurnosStruct> datosTurno;
     private TurnosStruct turnos;
     private Paciente paciente;
@@ -64,6 +70,7 @@ public class NuevaPracticaFragment extends Fragment {
     private String url;
     private String idmed;
     private Spinner spinnerPractica;
+    private CustomSpinnerAdapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -114,14 +121,40 @@ public class NuevaPracticaFragment extends Fragment {
         recView = (RecyclerView)getActivity().findViewById(R.id.nuevaPracticaRecView);
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
+        url = WSConstants.StringConstants.WS_URL+ WSConstants.StringConstants.WS_COMANDO_GET_ESTUDIOSMEDICOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
+                paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_FILTRO;
+        new HttpRequestTaskPractica().execute(url);
 
-        txtPractica.setOnKeyListener(new View.OnKeyListener() {
+        spinnerPractica.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                idmed = dataPractica.get(position).getIdObj();
+                recView.setAdapter(null);
+            }
 
-                return false;
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+
+        txtPractica.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -262,6 +295,87 @@ public class NuevaPracticaFragment extends Fragment {
             }
             db.close();
             datosTurno = null;
+        }
+
+    }
+
+    public class HttpRequestTaskPractica extends AsyncTask< String , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(params[0]);
+
+                if(jsonData!=null){
+                    try {
+                        // Manejo de Array en JSON
+
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        JSONObject json_data;
+                        dataPractica = new ArrayList<ObjectStruct>();
+                        arrayPractica = new ArrayList<String>();
+                        success = jsonObject.getString(JSONConstants.JSON_SUCCESS);
+                        if(success.equals("1")){
+                            JSONArray jArray = jsonObject.getJSONArray("items");
+                            for(int i=0;i<jArray.length();i++){
+                                json_data = jArray.getJSONObject(i);
+                                practica = new ObjectStruct();
+                                practica.setIdObj(json_data.getString(JSONConstants.JSON_ID));
+                                practica.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION));
+                                arrayPractica.add(practica.getDescripcion());
+                                dataPractica.add(practica);
+                            }
+
+                            return success;
+                        } else  {
+                            return jsonObject.getString(JSONConstants.JSON_MENSAJE);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("ServiceHandler", "Couldn't get any data from the url");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+            if(string!=null) {
+                if(success.equals("1")){
+                    // Set adapter
+                    adapter = new CustomSpinnerAdapter(getContext(),arrayPractica);
+                    spinnerPractica.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
+                    spinnerPractica.setAdapter(null);
+                }
+            } else {
+                Toast.makeText(getContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
+                spinnerPractica.setAdapter(null);
+            }
         }
 
     }
