@@ -155,6 +155,21 @@ public class NuevaPracticaFragment extends Fragment {
             }
         });
 
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recView.setAdapter(null);
+                ObjectStruct prac = dataPractica.get(spinnerPractica.getSelectedItemPosition());
+
+
+                String param = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GET_TURNOSPRACTICA+
+                        WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
+                        paciente.getTokenPaciente()+WSConstants.StringConstants.WS_IDGRUPOMEDICO+prac.getIdObj()+
+                        WSConstants.StringConstants.WS_IDOBRASOCIAL+"PRUEBA"+ WSConstants.StringConstants.WS_FORMATO;
+                new HttpRequestTaskTurnos().execute(param);
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

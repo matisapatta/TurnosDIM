@@ -41,6 +41,7 @@ public class WSConstants {
         public static final String WS_ESPECIALIDAD = "&especialidad=";
         public static final String WS_IDESPECIALIDAD = "&idespecialidad=";
         public static final String WS_IDMEDICO = "&idmedico=";
+        public static final String WS_IDGRUPOMEDICO = "&idgrupomedico=";
         public static final String WS_IDOBRASOCIAL = "&idobrasocial=";
         public static final String WS_IDPLAN = "&idplan=";
         public static final String WS_IDMOTIVOCANCELACION = "&idmotivocancelacion=";
