@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnBuscarPractica"
         android:textStyle="bold"
-        android:background="@drawable/button_simple"
+        android:background="@drawable/background_botonnaranja"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentNuevaPractica"
         android:layout_marginLeft="16dp"

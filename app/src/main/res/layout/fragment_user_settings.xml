@@ -233,7 +233,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/fragmentUserSettings"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/button_simple"
+        android:background="@drawable/background_botonnaranja"
         android:textStyle="bold"/>
 
     <Button
@@ -249,7 +249,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentUserSettings"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/button_simple"
+        android:background="@drawable/background_botonnaranja"
         android:textStyle="bold"/>
 
 

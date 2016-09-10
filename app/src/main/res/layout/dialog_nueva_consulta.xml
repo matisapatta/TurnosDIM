@@ -114,7 +114,7 @@
         app:layout_constraintRight_toRightOf="@+id/dialogturnoslayout"
         android:layout_marginTop="128dp"
         app:layout_constraintTop_toTopOf="@+id/dialogturnoslayout"
-        android:background="@drawable/button_simple"
+        android:background="@drawable/background_botonnaranja"
         android:textStyle="bold"/>
 
     <Button
@@ -130,7 +130,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/btnAceptar"
-        android:background="@drawable/button_simple"
+        android:background="@drawable/background_botonnaranja"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialogturnoslayout"
         android:layout_marginBottom="16dp"
