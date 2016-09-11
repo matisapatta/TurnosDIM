@@ -156,7 +156,7 @@ public class NuevaPracticaFragment extends Fragment {
                     for (String c : arrayPractica) {
                         if (textLength <= s.length()) {
                             if (c.toLowerCase().contains(s.toString().toLowerCase())) {
-                                tempArray.add(c);
+                                tempArray.add(c.toUpperCase());
                             }
                         }
                     }
@@ -370,7 +370,7 @@ public class NuevaPracticaFragment extends Fragment {
                                 practica = new ObjectStruct();
                                 practica.setIdObj(json_data.getString(JSONConstants.JSON_ID));
                                 practica.setDescripcion(json_data.getString(JSONConstants.JSON_DESCRIPCION));
-                                arrayPractica.add(practica.getDescripcion());
+                                arrayPractica.add(practica.getDescripcion().toUpperCase());
                                 dataPractica.add(practica);
                             }
 

@@ -9,7 +9,7 @@
     >
 
     <TableLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="352dp"
+        android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
@@ -26,7 +26,6 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="vertical"
                 android:background="@drawable/background_turnogris"
                 >
@@ -39,6 +38,7 @@
                     android:text="Mie"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:textColor="#FFFFFF"
                     />
 
                 <TextView android:id="@+id/lblNumDiaDialogo"
@@ -49,6 +49,7 @@
                     android:text= "06"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:textColor="#FFFFFF"
                     />
 
                 <TextView android:id="@+id/lblMesDialogo"
@@ -59,6 +60,7 @@
                     android:text="Abril"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:textColor="#FFFFFF"
                     />
 
             </LinearLayout>
@@ -70,33 +72,53 @@
                 android:background="@drawable/background_turnonaranja">
 
                 <TextView android:id="@+id/lblMedicoDialogo"
-                    android:gravity="center_horizontal"
-
+                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textStyle="bold"
                     android:textSize="20sp"
-                    android:text="Medico dfgjkdgj dkjfgdjfgk "
+                    android:text="Medico dfjfgk asdadasda"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
                     />
 
                 <TextView android:id="@+id/lblEspecialidadDialogo"
-                    android:gravity="center"
-                    android:layout_marginLeft="0dp"
+                    android:gravity="left"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textStyle="normal"
                     android:textSize="14sp"
-                    android:text= "especialidad dfgdfgd dgdfgdf"
+                    android:text= "especf"
+                    android:paddingStart="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
                     />
-
-                <TextView android:id="@+id/lblHoraDialogo"
+                <RelativeLayout
+                    android:id="@+id/fecha"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textStyle="normal"
-                    android:textSize="12sp"
-                    android:text="fecha"
-                    />
-
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <TextView android:id="@+id/lblHoraDialogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:text="fecha"
+                        android:paddingStart="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
+                        android:background="@drawable/background_turnofecha"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        />
+                </RelativeLayout>
             </LinearLayout>
         </TableRow>
     </TableLayout>

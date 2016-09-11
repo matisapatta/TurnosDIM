@@ -22,7 +22,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> implements Spinne
     private Context context;
 
     public CustomSpinnerAdapter(Context context, ArrayList<String> data){
-        super(context,R.layout.support_simple_spinner_dropdown_item, data);
+        super(context,R.layout.spinner_item, data);
         this.data = data;
         this.context = context;
         this.tempListData = data;

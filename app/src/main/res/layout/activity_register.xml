@@ -36,18 +36,22 @@
                 >
                 <TableRow
                     android:layout_marginBottom="10dp"
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     >
+
                     <TextView
                         android:text="Nombre:"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textColor="#000000"/>
+
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <EditText
                         android:hint="Nombre"
                         android:layout_width="match_parent"
@@ -55,6 +59,9 @@
                         android:id="@+id/contentNombre"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
                 </TableRow>
                 <TableRow
@@ -75,6 +82,9 @@
                         android:id="@+id/contentDNI"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
                 </TableRow>
                 <TableRow
@@ -95,6 +105,9 @@
                         android:id="@+id/contentEmail"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
                 </TableRow>
                 <TableRow
@@ -104,7 +117,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textColor="#000000"/>
+                        android:textColor="#000000"
+                        android:layout_weight="1"/>
                     <TextView
                         android:text="Sexo"
                         android:layout_width="match_parent"
@@ -123,6 +137,9 @@
                         android:id="@+id/contentFnac"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
 
                     <Spinner
@@ -139,7 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -150,6 +167,9 @@
                         android:id="@+id/contentTel"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
                 </TableRow>
                 <TableRow
@@ -170,6 +190,9 @@
                         android:id="@+id/contentTelAd"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:background="@drawable/background_detalleturno"/>
                 </TableRow>
                 <TableRow
@@ -187,14 +210,16 @@
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerCobertura" />
+                        android:id="@+id/spinnerCobertura"
+                        android:layout_weight="1"
+                        android:background="@color/naranjaClaro"/>
                 </TableRow>
 
                 <TableRow
                     android:layout_marginBottom="10dp">
                     <TextView
                         android:text="Plan"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textColor="#000000"/>
@@ -202,9 +227,11 @@
                 <TableRow
                     android:layout_marginBottom="10dp">
                     <Spinner
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinnerPlan" />
+                        android:id="@+id/spinnerPlan"
+                        android:layout_weight="1"
+                        android:background="@color/naranjaClaro"/>
 
                 </TableRow>
 
