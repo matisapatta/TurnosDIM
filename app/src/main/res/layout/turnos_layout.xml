@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/background_turnogeneral"
+    android:padding="1dp">
 
 
     <LinearLayout
@@ -22,6 +24,7 @@ android:layout_height="wrap_content"
             android:text="Mie"
             android:textAlignment="center"
             android:gravity="center"
+            android:textColor="#FFFFFF"
             />
 
         <TextView android:id="@+id/lblNumDia"
@@ -32,6 +35,7 @@ android:layout_height="wrap_content"
             android:text= "06"
             android:textAlignment="center"
             android:gravity="center"
+            android:textColor="#FFFFFF"
             />
 
         <TextView android:id="@+id/lblMes"
@@ -42,6 +46,7 @@ android:layout_height="wrap_content"
             android:text="Abril"
             android:textAlignment="center"
             android:gravity="center"
+            android:textColor="#FFFFFF"
             />
 
     </LinearLayout>
@@ -53,7 +58,7 @@ android:layout_height="wrap_content"
         android:background="@drawable/background_turnonaranja">
 
         <TextView android:id="@+id/lblMedico"
-            android:gravity="center_horizontal"
+            android:gravity="left"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textStyle="bold"
@@ -66,7 +71,7 @@ android:layout_height="wrap_content"
             />
 
         <TextView android:id="@+id/lblEspecialidad"
-            android:gravity="center"
+            android:gravity="left"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textStyle="normal"
@@ -77,18 +82,31 @@ android:layout_height="wrap_content"
             android:paddingEnd="10dp"
             android:paddingRight="10dp"
             />
-
-        <TextView android:id="@+id/lblHora"
+        <RelativeLayout
+            android:id="@+id/fecha"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textStyle="normal"
-            android:textSize="12sp"
-            android:text="fecha"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
-            />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView android:id="@+id/lblHora"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:text="fecha"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/background_turnofecha"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                />
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
