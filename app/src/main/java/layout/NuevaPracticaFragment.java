@@ -63,6 +63,7 @@ public class NuevaPracticaFragment extends Fragment {
     private ObjectStruct practica;
     private ArrayList<ObjectStruct> dataPractica;
     private ArrayList<String> arrayPractica;
+    private ArrayList<String> tempArray;
     private ArrayList<TurnosStruct> datosTurno;
     private TurnosStruct turnos;
     private Paciente paciente;
@@ -144,10 +145,27 @@ public class NuevaPracticaFragment extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 adapter.getFilter().filter(s);
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int textLength = s.length();
+                if(textLength >= 1) {
+                    tempArray = new ArrayList<String>();
+                    for (String c : arrayPractica) {
+                        if (textLength <= s.length()) {
+                            if (c.toLowerCase().contains(s.toString().toLowerCase())) {
+                                tempArray.add(c);
+                            }
+                        }
+                    }
+                    adapter = new CustomSpinnerAdapter(getContext(), tempArray);
+                } else {
+                    adapter = new CustomSpinnerAdapter(getContext(), arrayPractica);
+                }
+
+                spinnerPractica.setAdapter(adapter);
 
             }
 
