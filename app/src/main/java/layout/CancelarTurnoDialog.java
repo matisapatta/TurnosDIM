@@ -48,6 +48,7 @@ public class CancelarTurnoDialog extends DialogFragment {
     private String idTurno;
     private String success;
     private Button btnCancelarTurno;
+    private Button btnSalir;
     private String idRazon;
 
 
@@ -90,7 +91,7 @@ public class CancelarTurnoDialog extends DialogFragment {
         context = getActivity();
         spinnerRazones = (Spinner)v.findViewById(R.id.spinnerRazones);
         btnCancelarTurno = (Button)v.findViewById(R.id.btnCancelarTurno);
-        Button btnSalir = (Button)v.findViewById(R.id.btnSalir);
+        btnSalir = (Button)v.findViewById(R.id.btnSalir);
 
         CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(context,datosText);
         spinnerRazones.setAdapter(adapter);
@@ -134,6 +135,12 @@ public class CancelarTurnoDialog extends DialogFragment {
                 new HttpRequestTask().execute(url);
                 getDialog().dismiss();
 
+            }
+        });
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss();
             }
         });
 

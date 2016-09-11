@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -119,6 +120,7 @@ public class NuevaPracticaFragment extends Fragment {
         btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscarPractica);
         txtPractica = (EditText)getActivity().findViewById(R.id.textPractica);
         recView = (RecyclerView)getActivity().findViewById(R.id.nuevaPracticaRecView);
+        recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
         url = WSConstants.StringConstants.WS_URL+ WSConstants.StringConstants.WS_COMANDO_GET_ESTUDIOSMEDICOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
@@ -166,7 +168,7 @@ public class NuevaPracticaFragment extends Fragment {
                         WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
                         paciente.getTokenPaciente()+WSConstants.StringConstants.WS_IDGRUPOMEDICO+prac.getIdObj()+
                         WSConstants.StringConstants.WS_IDOBRASOCIAL+"PRUEBA"+ WSConstants.StringConstants.WS_FORMATO;
-                new HttpRequestTaskTurnos().execute(param);
+                new HttpRequestTaskTurno2().execute(param);
             }
         });
 
@@ -211,7 +213,7 @@ public class NuevaPracticaFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public class HttpRequestTaskTurnos extends AsyncTask<String , Void, String> {
+    public class HttpRequestTaskTurno2 extends AsyncTask<String , Void, String> {
         //Before running code in separate thread
         private ProgressDialog progressDialog;
         @Override
@@ -295,8 +297,8 @@ public class NuevaPracticaFragment extends Fragment {
             if(success!=null) {
                 if(success.equals("1")){
                     // Set adapter
-                    NuevaConsultaAdapter adapter = new NuevaConsultaAdapter(datosTurno,getActivity(),idmed);
-                    recView.setAdapter(adapter);
+                    NuevaConsultaAdapter consultaAdapter = new NuevaConsultaAdapter(datosTurno,getActivity(),idmed);
+                    recView.setAdapter(consultaAdapter);
 
                 } else {
                     Toast.makeText(getContext(), string,Toast.LENGTH_LONG).show();
