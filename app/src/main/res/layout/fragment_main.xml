@@ -16,7 +16,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            >
+            <TextView
+                android:text="Fragment Main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragmentMainText"
+                android:layout_gravity="top|center_horizontal"
+                android:textSize="20dp"
+                />
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
@@ -24,19 +34,28 @@
                 android:layout_gravity="top"
                 app:layout_constraintLeft_toLeftOf="@+id/fragmentMain"
                 app:layout_constraintTop_toTopOf="@+id/fragmentMain"
-                android:background="#878789">
+                android:background="#878789"
+                android:clickable="true">
             </android.support.v4.view.ViewPager>
-            <TextView
-                android:text="Fragment Main"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mainAds"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragmentMainText"
-                android:layout_gravity="top|center_horizontal"
-                />
+                android:gravity="center"
+                android:layout_marginStart="16dp"
+                app:layout_constraintLeft_toLeftOf="@+id/fragmentNuevaPractica"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintRight_toRightOf="@+id/fragmentNuevaPractica"
+                android:layout_marginRight="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/fragmentNuevaPractica"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuscarPractica">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
-
-
     </ScrollView>
 
 

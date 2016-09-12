@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -124,7 +126,6 @@ public class MainFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -136,10 +137,9 @@ public class MainFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
 
             }
+
         });
-
         return view;
-
 
     }
 
@@ -175,7 +175,7 @@ public class MainFragment extends Fragment {
         text = (TextView)getActivity().findViewById(R.id.fragmentMainText);
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
-        text.setText(paciente.getNombre());
+        text.setText("Bienvenido " + paciente.getNombre());
 
 
     }
@@ -232,6 +232,9 @@ public class MainFragment extends Fragment {
         public int getCount() {
             return fragmentos.size();
         }
+
+
     }
+
 
 }
