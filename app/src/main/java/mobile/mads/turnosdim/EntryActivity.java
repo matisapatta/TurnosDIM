@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import database.DBManager;
@@ -32,6 +33,7 @@ public class EntryActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DBManager db;
     private String dni;
+    private Button resetPwdBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class EntryActivity extends AppCompatActivity {
         dniTxt=(EditText)findViewById(R.id.loginDNI);
         passTxt=(EditText)findViewById(R.id.loginPassword);
         newUserBtn=(Button)findViewById(R.id.newUserBtn);
+        resetPwdBtn=(Button)findViewById(R.id.resetPwdBtn);
 
         // Inicializo la DB
         db = new DBManager(getApplicationContext());
@@ -77,6 +80,15 @@ public class EntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EntryActivity.this,RegisterActivity.class);
                 startActivity(i);
+            }
+        });
+
+        resetPwdBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EntryActivity.this,ResetPwdActivity.class);
+                startActivity(i);
+
             }
         });
     }

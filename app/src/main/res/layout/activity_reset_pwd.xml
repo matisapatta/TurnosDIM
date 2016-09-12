@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_reset_pwd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mobile.mads.turnosdim.ResetPwdActivity">
+
+    <TextView
+        android:text="Ingrese su DNI:"
+        android:layout_width="318dp"
+        android:layout_height="19dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="@+id/activity_reset_pwd"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_reset_pwd"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_reset_pwd"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:id="@+id/resetTxt" />
+    <EditText
+        android:hint="DNI"
+        android:layout_width="318dp"
+        android:layout_height="33dp"
+        android:id="@+id/resetDNI"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/background_detalleturno"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_reset_pwd"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_reset_pwd"
+        android:layout_marginRight="16dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@+id/resetTxt" />
+
+    <Button
+        android:text="Reestablecer"
+        android:background="@drawable/background_botonnaranja"
+        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/reestablecerBtn"
+        app:layout_constraintVertical_bias="0.19"
+        android:layout_marginTop="104dp"
+        app:layout_constraintTop_toBottomOf="@+id/resetDNI"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_reset_pwd"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="@+id/activity_reset_pwd"
+        android:layout_marginRight="16dp" />
+
+</android.support.constraint.ConstraintLayout>
