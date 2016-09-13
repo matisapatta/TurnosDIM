@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_turnos"
-            android:icon="@drawable/ic_menu_calendar_add"
-            android:title="@string/navTurnos" />
-        <item
-            android:id="@+id/nav_exams"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/navExams" />
-        <item
-            android:id="@+id/nav_locations"
-            android:icon="@drawable/ic_menu_location"
-            android:title="@string/navLocations" />
-        <item
-            android:checkableBehavior="single"
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/navUserOpt" />
-
-    </group>
-
-    <item android:title="">
+    <item android:title="@string/navTurnosTitle"
+        android:visible="true">
         <menu>
-            <item
-                android:id="@+id/nav_endSession"
-                android:icon="@drawable/ic_menu_sign_out"
-                android:title="@string/navEndSession" />
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_turnos"
+                    android:icon="@drawable/ic_menu_calendar_add"
+                    android:title="@string/navTurnos" />
+                <item
+                    android:id="@+id/nav_exams"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="@string/navExams" />
+                <item
+                    android:id="@+id/nav_locations"
+                    android:icon="@drawable/ic_menu_location"
+                    android:title="@string/navLocations" />
+            </group>
+
+        </menu>
+    </item>
+    <item android:title="@string/navOpcionesTitle"
+        android:visible="true">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/navUserOpt" />
+                <item
+                    android:id="@+id/nav_endSession"
+                    android:icon="@drawable/ic_menu_sign_out"
+                    android:title="@string/navEndSession" />
+            </group>
         </menu>
     </item>
 

@@ -5,11 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     private String url;
     private String success;
     private Paciente paciente;
-
+    private MenuItem lastMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         super.onStart();
         selectedFragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, selectedFragment).commit();
+                .replace(R.id.content_main, selectedFragment, "main_screen").commit();
     }
 
     @Override
@@ -101,7 +97,16 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //Al pressionar el boton ATRAS si esta en la pantalla principal sale, sino ignora el stack y va a la principal
+            Fragment mainFragment = getSupportFragmentManager().findFragmentByTag("main_screen");
+            if (mainFragment != null && mainFragment.isVisible()) {
+                finish();
+            }else
+            {
+                selectedFragment = new MainFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, selectedFragment, "main_screen").commit();
+            }
         }
     }
 
@@ -120,7 +125,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_home) {
+            selectedFragment = new MainFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, selectedFragment).commit();
+
+            setTitle(getString(R.string.title_activity_main));
+            if (lastMenu != null)
+                lastMenu.setChecked(false);
             return true;
         }
 
@@ -183,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
+        lastMenu = menuItem;
         // Set action bar title
         setTitle(menuItem.getTitle());
         // Close the navigation drawer

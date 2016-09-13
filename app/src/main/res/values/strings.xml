@@ -3,14 +3,14 @@
     <string name="loginDNI">DNI Paciente</string>
     <string name="loginPass">Contraseña</string>
     <string name="loginBtn">Iniciar Sesión</string>
-    <string name="title_activity_main">Bienvenidos</string>
+    <string name="title_activity_main">Clinica DIM</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="navTurnos">Mis Turnos</string>
     <string name="navExams">Nuevo Turno</string>
     <string name="navConfig">Configuración</string>
-    <string name="navUserOpt">Opciones de Usuario</string>
+    <string name="navUserOpt">Datos de Usuario</string>
     <string name="navEndSession">Cerrar Sesión</string>
     <string name="navLocations">Centros de Atención</string>
     <string name="selectEspecialidad">Seleccione la especialidad:</string>
@@ -31,6 +31,8 @@
     <string name="nuevaConsulta">Confirmar el turno</string>
     <string name="cancelarTurno">¿Cancelar el turno?</string>
     <string name="olvidoContraseña"><u>Olvidó su contraseña?</u></string>
+    <string name="navOpcionesTitle">Opciones de Usuario</string>
+    <string name="navTurnosTitle">Turnos</string>
 
     <string-array name="especialidadesArray">
         <item>Clínica Médica</item>

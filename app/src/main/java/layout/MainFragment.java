@@ -130,7 +130,7 @@ public class MainFragment extends Fragment {
 
         handler = new android.os.Handler();
         //Creo el pager
-        managerPager = new ManagerPager(getActivity().getSupportFragmentManager());
+        managerPager = new ManagerPager(getChildFragmentManager());
         //Agrego las imagenes al pager utilizando fragmentos MainViewPager que utiliza el layout
         //de fragment_main_view_pager.x ml.
         mViewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -157,8 +157,6 @@ public class MainFragment extends Fragment {
             }
 
         });
-
-
 
         return view;
 
@@ -262,7 +260,6 @@ public class MainFragment extends Fragment {
         public int getCount() {
             return fragmentos.size();
         }
-
 
     }
 
