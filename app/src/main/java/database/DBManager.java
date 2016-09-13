@@ -4,11 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.TurnosStruct;
+import mobile.mads.turnosdim.UsuariosStruct;
 
 /**
  * Created by mati on 8/18/16.
@@ -29,6 +33,47 @@ public class DBManager extends Observable {
         SQLiteDatabase db = b.getWritableDatabase();
         b.onUpgrade(db, db.getVersion(), db.getVersion()+1);
 
+    }
+
+    public void guardarUsuario(String dni, String pwd, String nom){
+        SQLiteDatabase db = b.getWritableDatabase();
+        ContentValues registry = new ContentValues();
+        registry.put(DBLayout.DBConstants.USUARIOS_TABLE_DNI, dni);
+        registry.put(DBLayout.DBConstants.USUARIOS_TABLE_PWD, pwd);
+        registry.put(DBLayout.DBConstants.USUARIOS_TABLE_NOM, nom);
+        db.insert(DBLayout.DBConstants.USUARIOS_TABLE, null, registry);
+        registry.clear();
+        setChanged();
+        notifyObservers();
+    }
+
+    // Obtener la lista entera de usuarios
+    public ArrayList<UsuariosStruct> getUsuarios() {
+        ArrayList<UsuariosStruct> list = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + DBLayout.DBConstants.USUARIOS_TABLE;
+        SQLiteDatabase db = b.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                UsuariosStruct obj = new UsuariosStruct(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                list.add(obj);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        b.close();
+        return list;
+    }
+
+    public boolean getUsuarioPorDNI(String dni){
+        UsuariosStruct o = null;
+        String selectQuery = "SELECT * FROM " + DBLayout.DBConstants.USUARIOS_TABLE;
+        SQLiteDatabase db = b.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        cursor.close();
+        b.close();
+        return false;
     }
 
 

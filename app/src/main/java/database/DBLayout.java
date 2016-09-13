@@ -45,7 +45,7 @@ public class DBLayout {
                 + USER_TABLE_TELAD + " VARCHAR(20), "
                 + USER_TABLE_PLAN + " VARCHAR(40)" + ")";
 
-        static final int CURRENT_VERSION = 3;
+        static final int CURRENT_VERSION = 4;
 
         static final String TURNOS_TABLE = "Turnos";
 
@@ -87,6 +87,18 @@ public class DBLayout {
                 + PRACTICAS_TABLE_IDNOMENCLADOR + " VARCHAR(10), "
                 + PRACTICAS_TABLE_DESCRIPCION + " VARCHAR(40)" + ")";
 
+        static final String USUARIOS_TABLE = "Paciente";
+
+        static final String USUARIOS_TABLE_ID = "_id";
+        static final String USUARIOS_TABLE_DNI = "dni";
+        static final String USUARIOS_TABLE_PWD = "pwd";
+        static final String USUARIOS_TABLE_NOM = "nombre";
+
+        static final String CREATE_USUARIOS_TABLE = "CREATE TABLE IF NOT EXISTS " + USUARIOS_TABLE
+                + " (" + USUARIOS_TABLE_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + USUARIOS_TABLE_DNI + "  VARCHAR(10), "
+                + USUARIOS_TABLE_PWD + " VARCHAR(30), "
+                + USUARIOS_TABLE_NOM + " VARCHAR(40)" + ")";
 
 
 

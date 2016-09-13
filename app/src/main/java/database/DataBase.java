@@ -24,6 +24,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + DBLayout.DBConstants.USER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + DBLayout.DBConstants.TURNOS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + DBLayout.DBConstants.PRACTICAS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DBLayout.DBConstants.USUARIOS_TABLE);
         createBDBase(db);
     }
 
@@ -32,6 +33,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL(DBLayout.DBConstants.CREATE_USER_TABLE);
         db.execSQL(DBLayout.DBConstants.CREATE_TURNOS_TABLE);
         db.execSQL(DBLayout.DBConstants.CREATE_PRACTICAS_TABLE);
+        db.execSQL(DBLayout.DBConstants.CREATE_USUARIOS_TABLE);
 
     }
 }
