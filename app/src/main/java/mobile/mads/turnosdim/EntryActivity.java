@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,7 +34,7 @@ public class EntryActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DBManager db;
     private String dni;
-    private Button resetPwdBtn;
+    private TextView resetPwdBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class EntryActivity extends AppCompatActivity {
         dniTxt=(EditText)findViewById(R.id.loginDNI);
         passTxt=(EditText)findViewById(R.id.loginPassword);
         newUserBtn=(Button)findViewById(R.id.newUserBtn);
-        resetPwdBtn=(Button)findViewById(R.id.resetPwdBtn);
+        resetPwdBtn=(TextView)findViewById(R.id.resetPwdBtn);
 
         // Inicializo la DB
         db = new DBManager(getApplicationContext());

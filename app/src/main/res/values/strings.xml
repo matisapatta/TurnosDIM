@@ -30,6 +30,7 @@
     <string name="selectMed">Seleccione el médico:</string>
     <string name="nuevaConsulta">Confirmar el turno</string>
     <string name="cancelarTurno">¿Cancelar el turno?</string>
+    <string name="olvidoContraseña"><u>Olvidó su contraseña?</u></string>
 
     <string-array name="especialidadesArray">
         <item>Clínica Médica</item>

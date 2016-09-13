@@ -1,6 +1,7 @@
 package mobile.mads.turnosdim;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ public class InfoViewsAdapter extends RecyclerView.Adapter<InfoViewsAdapter.Info
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.infoviews_layout, viewGroup, false);
 
-        InfoViewsViewHolder ivvh = new InfoViewsAdapter.InfoViewsViewHolder(itemView);
+        InfoViewsViewHolder ivvh = new InfoViewsViewHolder(itemView);
 
         return ivvh;
     }
@@ -52,17 +53,23 @@ public class InfoViewsAdapter extends RecyclerView.Adapter<InfoViewsAdapter.Info
 
         private TextView txtTitulo;
         private TextView txtTexto;
+        private TextView txtSubTexto;
         private ImageView imgIcono;
 
         public InfoViewsViewHolder(View itemView) {
             super(itemView);
             txtTitulo = (TextView)itemView.findViewById(R.id.txtTitulo);
             txtTexto = (TextView)itemView.findViewById(R.id.txtTexto);
+            txtSubTexto = (TextView)itemView.findViewById(R.id.txtSubTexto);
             imgIcono = (ImageView)itemView.findViewById(R.id.imgIcono);
         }
 
         public void bindInfoview(InfoViewsStruct t) {
 
+            txtTitulo.setText(t.getTxtTitulo());
+            txtTexto.setText(t.getTxtTexto());
+            txtSubTexto.setText(t.getTxtSubTexto());
+            imgIcono.setImageResource(t.getImgIcono());
         }
 
     }

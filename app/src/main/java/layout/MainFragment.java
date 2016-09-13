@@ -1,27 +1,43 @@
 package layout;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 
 import database.DBManager;
+import mobile.mads.turnosdim.InfoViewsAdapter;
+import mobile.mads.turnosdim.InfoViewsStruct;
+import mobile.mads.turnosdim.JSONConstants;
+import mobile.mads.turnosdim.ObjectStruct;
 import mobile.mads.turnosdim.Paciente;
 import mobile.mads.turnosdim.R;
+import mobile.mads.turnosdim.ServiceHandler;
 
 
 /**
@@ -41,7 +57,9 @@ public class MainFragment extends Fragment {
     private DBManager db;
     private Paciente paciente;
     private TextView text;
-
+    private ArrayList<InfoViewsStruct> datosInfoView;
+    private RecyclerView recView;
+    private String url;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -139,6 +157,9 @@ public class MainFragment extends Fragment {
             }
 
         });
+
+
+
         return view;
 
     }
@@ -176,6 +197,11 @@ public class MainFragment extends Fragment {
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
         text.setText("Bienvenido " + paciente.getNombre());
+        datosInfoView = new ArrayList<InfoViewsStruct>();
+        recView = (RecyclerView)getActivity().findViewById(R.id.mainAds);
+        recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        new HttpRequestTask().execute();
+
 
 
     }
@@ -206,6 +232,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        recView.setAdapter(null);
         handler.removeCallbacks(runnable);
     }
 
@@ -236,5 +263,48 @@ public class MainFragment extends Fragment {
 
     }
 
+    public class HttpRequestTask extends AsyncTask<Void , Void, String> {
+        //Before running code in separate thread
+        private ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getContext().getResources().getString(R.string.loading));
+            progressDialog.show();
+        }
 
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+                /* aun no hay WS para esto
+                ServiceHandler sh = new ServiceHandler();
+
+                // Make WS Call
+                String jsonData = sh.doGetRequest(url);
+                */
+                InfoViewsStruct iv = new InfoViewsStruct("DIM 10k","Ya te sumaste a los 10k de DIM?","http://dim.com.ar/maraton/",R.drawable.icon_info);
+                datosInfoView.add(iv);
+                iv = new InfoViewsStruct("Turno Cercano","Recuerde su turno de Cardiologia con el Dr Fernandes el 1 de Noviembre a las 16:15hs.","Faltan 3 dias",R.drawable.icon_turno);
+                datosInfoView.add(iv);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String string) {
+            progressDialog.dismiss();
+
+            InfoViewsAdapter adapter = new InfoViewsAdapter(datosInfoView);
+            recView.setAdapter(adapter);
+
+            datosInfoView = null;
+        }
+
+    }
 }
