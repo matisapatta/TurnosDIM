@@ -196,7 +196,10 @@ public class MainFragment extends Fragment {
         text = (TextView)getActivity().findViewById(R.id.fragmentMainText);
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
-        text.setText("Bienvenido " + paciente.getNombre());
+        if(paciente.getSexo().equals("M"))
+            text.setText("Bienvenido " + paciente.getNombre());
+        else
+            text.setText("Bienvenida " + paciente.getNombre());
         datosInfoView = new ArrayList<InfoViewsStruct>();
         recView = (RecyclerView)getActivity().findViewById(R.id.mainAds);
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
@@ -286,7 +289,7 @@ public class MainFragment extends Fragment {
                 */
                 InfoViewsStruct iv = new InfoViewsStruct("DIM 10k","Ya te sumaste a los 10k de DIM?","http://dim.com.ar/maraton/",R.drawable.icon_info);
                 datosInfoView.add(iv);
-                iv = new InfoViewsStruct("Turno Cercano","Recuerde su turno de Cardiologia con el Dr Fernandes el 1 de Noviembre a las 16:15hs.","Faltan 3 dias",R.drawable.icon_turno);
+                iv = new InfoViewsStruct("Turno Cercano","Recuerde su turno de Cardiologia con el Dr. Fernandes el 1 de Noviembre a las 16:15hs.","Faltan 3 dias",R.drawable.icon_turno);
                 datosInfoView.add(iv);
             } catch (Exception e) {
                 e.printStackTrace();
