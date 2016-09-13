@@ -156,7 +156,7 @@ public class LocationsFragment extends Fragment implements OnMapReadyCallback {
 //DO WHATEVER YOU WANT WITH GOOGLEMAP
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
         map.getUiSettings().setAllGesturesEnabled(true);
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)

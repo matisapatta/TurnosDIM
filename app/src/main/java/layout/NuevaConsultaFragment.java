@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -73,6 +74,7 @@ public class NuevaConsultaFragment extends Fragment {
     private ArrayList<TurnosStruct> datosTurno;
     private TurnosStruct turnos;
     private String idmed;
+    private CheckBox checkBox;
 
 
     public NuevaConsultaFragment() {
@@ -122,6 +124,21 @@ public class NuevaConsultaFragment extends Fragment {
         spinnerEspecialidades = (Spinner)getActivity().findViewById(R.id.spinnerEspecialidad);
         spinnerMedicos = (Spinner)getActivity().findViewById(R.id.spinnerMedico);
         btnBuscar = (Button)getActivity().findViewById(R.id.btnBuscar);
+        checkBox = (CheckBox)getActivity().findViewById(R.id.checkBox);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()){
+                    spinnerMedicos.setEnabled(false);
+                    spinnerMedicos.setBackgroundColor(getResources().getColor(R.color.grisClaro));
+                } else {
+                    spinnerMedicos.setEnabled(true);
+                    spinnerMedicos.setBackgroundColor(getResources().getColor(R.color.naranjaClaro));
+
+                }
+            }
+        });
 
         recView = (RecyclerView)getActivity().findViewById(R.id.nuevaConsultaRecView);
         recView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
@@ -175,17 +192,28 @@ public class NuevaConsultaFragment extends Fragment {
                 recView.setAdapter(null);
                 ObjectStruct esp = dataEsp.get(spinnerEspecialidades.getSelectedItemPosition());
                 ObjectStruct med = dataMed.get(spinnerMedicos.getSelectedItemPosition());
-
-                String param = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETTURNOSCONSULTAS+
+                String param;
+                if(checkBox.isChecked()){
+                param = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETTURNOSCONSULTAS+
                         WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
                         paciente.getTokenPaciente()+WSConstants.StringConstants.WS_IDESPECIALIDAD+esp.getIdObj()+
                         WSConstants.StringConstants.WS_IDMEDICO+med.getIdObj()+WSConstants.StringConstants.WS_IDOBRASOCIAL+
                         "PRUEBA"+ WSConstants.StringConstants.WS_FORMATO;
+                } else {
+                    param = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_GETTURNOSCONSULTAS+
+                            WSConstants.StringConstants.WS_ID_PACIENTE+paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+
+                            paciente.getTokenPaciente()+WSConstants.StringConstants.WS_IDESPECIALIDAD+esp.getIdObj()+
+                            WSConstants.StringConstants.WS_IDMEDICO+""+WSConstants.StringConstants.WS_IDOBRASOCIAL+
+                            "PRUEBA"+ WSConstants.StringConstants.WS_FORMATO;
+                }
+
+
                 new HttpRequestTaskTurnos().execute(param);
             }
         });
 
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
