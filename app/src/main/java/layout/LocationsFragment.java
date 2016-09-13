@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -141,6 +141,17 @@ public class LocationsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
+    public void onResume(){
+        mapView.onResume();
+        super.onResume();
+    }
+
+    @Override
     public void onMapReady(GoogleMap map) {
 //DO WHATEVER YOU WANT WITH GOOGLEMAP
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -154,13 +165,64 @@ public class LocationsFragment extends Fragment implements OnMapReadyCallback {
         }
         map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
+        //MapsInitializer.initialize(this.getActivity());
 
-        LatLng sydney = new LatLng(-33.867, 151.206);
+        LatLng moron = new LatLng(-34.6490785,-58.6149477);
+        LatLng moron2 = new LatLng(-34.649256,-58.6163895);
+        LatLng central = new LatLng(-34.6419383,-58.5683163);
+        LatLng complejidad = new LatLng(-34.6439118,-58.5639431);
+        LatLng odonto = new LatLng(-34.6415484,-58.5679718);
+        LatLng cardio = new LatLng(-34.6418285,-58.5683123);
+        LatLng trauma = new LatLng(-34.6392324,-58.5634551);
+        LatLng rivadavia = new LatLng(-34.6411901,-58.5701877);
+
         map.addMarker(new MarkerOptions()
-            .title("Sidney")
-            .position(sydney)
+                .title("DIM Sede Central")
+                .snippet("Belgrano 136, Ramos Mejia, Buenos Aires, Argentina")
+                .position(central)
         );
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10));
+        map.addMarker(new MarkerOptions()
+            .title("DIM Morón")
+            .snippet("Av Rivadavia 17620, Morón, Buenos Aires, Argentina")
+            .position(moron)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Morón 2")
+                .snippet("Av Rivadavia 17601, Morón, Buenos Aires, Argentina")
+                .position(moron2)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Alta Complejidad")
+                .snippet("Espora 18, Ramos Mejia, Buenos Aires, Argentina")
+                .position(complejidad)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Odontología")
+                .snippet("Av de Mayo 67, 3er Piso, Ramos Mejia, Buenos Aires, Argentina")
+                .position(odonto)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Cardiovascular")
+                .snippet("Belgrano 135, Ramos Mejía, Buenos Aires, Argentina")
+                .position(cardio)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Traumatología")
+                .snippet("Monteagudo 50, Ramos Mejía, Buenos Aires, Argentina")
+                .position(trauma)
+        );
+        map.addMarker(new MarkerOptions()
+                .title("DIM Rivadavia")
+                .snippet("Av. Rivadavia 14252, Ramos Mejía, Buenos Aires, Argentina")
+                .position(rivadavia)
+        );
+
+
+
+        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(sydney, 10);
+        //map.animateCamera(cameraUpdate);
+        LatLng temp = new LatLng(-34.644650,-58.591259);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(temp,13));
     }
 }
 

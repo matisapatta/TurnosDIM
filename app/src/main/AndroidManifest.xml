@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB7re7xccBO7ubnmMVA3TE_TMwbnWs-lN4"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDivwviFtlMud6Jv9pALceOUE9pbIWzAxs"/>
         <activity
             android:name=".EntryActivity"
             android:windowSoftInputMode="adjustPan">
