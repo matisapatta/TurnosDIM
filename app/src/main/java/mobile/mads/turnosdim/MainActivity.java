@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
                 selectedFragment = new MainFragment();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main, selectedFragment, "main_screen").commit();
+                setTitle(getString(R.string.title_activity_main));
+                if (lastMenu != null)
+                    lastMenu.setChecked(false);
             }
         }
     }
