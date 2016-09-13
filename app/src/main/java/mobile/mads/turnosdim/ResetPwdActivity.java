@@ -20,6 +20,7 @@ public class ResetPwdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reset_pwd);
         reestablecer=(Button)findViewById(R.id.reestablecerBtn);
         dniTxt=(EditText)findViewById(R.id.resetDNI);
+        emailTxt=(EditText)findViewById(R.id.resetEmail);
     }
 
     @Override
@@ -28,10 +29,18 @@ public class ResetPwdActivity extends AppCompatActivity {
         reestablecer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Se ha reestablecido la contraseña para el DNI "+dniTxt.getText()+". Se ha enviado un correo electrónico"+
-                " a "+" FALTA ESTO "+" con las instrucciones",Toast.LENGTH_LONG).show();
-                Intent i = new Intent(ResetPwdActivity.this,EntryActivity.class);
-                startActivity(i);
+                if(dniTxt.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"Por favor ingrese un DNI",Toast.LENGTH_SHORT).show();
+                } else {
+                    if(emailTxt.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),"Por favor ingrese un email",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Se ha reestablecido la contraseña para el DNI "+dniTxt.getText().toString()+". Se ha enviado un correo electrónico"+
+                        " a "+emailTxt.getText().toString()+" con las instrucciones",Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(ResetPwdActivity.this,EntryActivity.class);
+                        startActivity(i);
+                    }
+                }
             }
         });
     }

@@ -139,19 +139,22 @@ public class UserSettingsFragment extends Fragment {
 
         db = new DBManager(getContext());
         paciente = db.getPaciente(getContext());
-        url = WSConstants.StringConstants.WS_URL+ WSConstants.StringConstants.WS_COMANDO_MISDATOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
-                paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_FORMATO;
-        new HttpRequestTask().execute(url);
+        if(paciente!=null){
+            url = WSConstants.StringConstants.WS_URL+ WSConstants.StringConstants.WS_COMANDO_MISDATOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
+                    paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+ WSConstants.StringConstants.WS_FORMATO;
+            new HttpRequestTask().execute(url);
 
-        nombre.setText(paciente.getNombre());
-        email.setText(paciente.getEmail());
-        fnac.setText(paciente.getFnac());
-        dni.setText(paciente.getDni());
-        sexo.setText(paciente.getSexo());
-        cobertura.setText(paciente.getCobertura());
-        plan.setText(paciente.getPlan());
-        tel.setText(paciente.getTel());
-        telad.setText(paciente.getTelad());
+
+            nombre.setText(paciente.getNombre());
+            email.setText(paciente.getEmail());
+            fnac.setText(paciente.getFnac());
+            dni.setText(paciente.getDni());
+            sexo.setText(paciente.getSexo());
+            cobertura.setText(paciente.getCobertura());
+            plan.setText(paciente.getPlan());
+            tel.setText(paciente.getTel());
+            telad.setText(paciente.getTelad());
+        }
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
