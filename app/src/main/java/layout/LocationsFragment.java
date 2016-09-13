@@ -1,12 +1,24 @@
 package layout;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import mobile.mads.turnosdim.R;
 
@@ -18,7 +30,7 @@ import mobile.mads.turnosdim.R;
  * Use the {@link LocationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LocationsFragment extends Fragment {
+public class LocationsFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +42,8 @@ public class LocationsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private GoogleMap map;
+    private MapView mapView;
 
     public LocationsFragment() {
         // Required empty public constructor
@@ -58,6 +72,8 @@ public class LocationsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+
         }
     }
 
@@ -67,6 +83,20 @@ public class LocationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_locations, container, false);
+        mapView = (MapView) v.findViewById(R.id.mapView2);
+        mapView.onCreate(savedInstanceState);
+
+        // Gets to GoogleMap from the MapView and does initialization stuff
+        mapView.getMapAsync(this);
+
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        /*try {
+            MapsInitializer.initialize(this.getActivity());
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }*/
+
         return v;
     }
 
@@ -109,4 +139,28 @@ public class LocationsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction();
     }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+//DO WHATEVER YOU WANT WITH GOOGLEMAP
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setAllGesturesEnabled(true);
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
+        map.setMyLocationEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
+
+        LatLng sydney = new LatLng(-33.867, 151.206);
+        map.addMarker(new MarkerOptions()
+            .title("Sidney")
+            .position(sydney)
+        );
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10));
+    }
 }
+
