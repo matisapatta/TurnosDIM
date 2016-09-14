@@ -63,6 +63,12 @@ public class UsuariosRegistradosActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        //Intent i = new Intent(UsuariosRegistradosActivity.this,EntryActivity.class);
+        //startActivity(i);
+    }
 
     public class HttpRequestTask extends AsyncTask<String , Void, String> {
         //Before running code in separate thread
@@ -146,6 +152,8 @@ public class UsuariosRegistradosActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Se ha producido un error desconocido",Toast.LENGTH_LONG).show();
             }
             db.close();
+
+
         }
 
     }

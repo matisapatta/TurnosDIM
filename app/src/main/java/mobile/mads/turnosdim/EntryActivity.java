@@ -63,6 +63,12 @@ public class EntryActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(db.getPaciente(getApplicationContext())!=null)
+            finish();
+    }
 
     @Override
     public void onStart(){
@@ -102,6 +108,7 @@ public class EntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(EntryActivity.this,UsuariosRegistradosActivity.class);
                 startActivity(i);
+
             }
         });
     }
