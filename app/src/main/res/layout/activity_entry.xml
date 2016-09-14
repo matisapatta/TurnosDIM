@@ -36,7 +36,7 @@
             android:background="#00ffffff">
 
             <EditText
-                android:layout_width="338dp"
+                android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:inputType="number"
                 android:ems="10"
@@ -53,7 +53,7 @@
                 />
 
             <EditText
-                android:layout_width="338dp"
+                android:layout_width="match_parent"
                 android:layout_height="41dp"
                 android:inputType="textPassword"
                 android:ems="10"

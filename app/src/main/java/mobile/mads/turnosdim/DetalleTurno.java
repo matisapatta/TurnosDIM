@@ -122,8 +122,9 @@ public class DetalleTurno extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
-        finish();
+        //finish();
     }
+
 
     @Override
     public void onBackPressed(){

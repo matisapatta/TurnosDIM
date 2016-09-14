@@ -91,7 +91,7 @@
         android:id="@+id/nuevaPracticaRecView"
         android:scrollbars="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
 
         android:layout_marginStart="16dp"
