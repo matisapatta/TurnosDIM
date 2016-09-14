@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         db = new DBManager(this);
         paciente = new Paciente();
         paciente = db.getPaciente(this);
+
         url =    WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_MISDATOS+ WSConstants.StringConstants.WS_ID_PACIENTE+
                 paciente.getIdpaciente()+ WSConstants.StringConstants.WS_TOKEN+paciente.getTokenPaciente()+
                 WSConstants.StringConstants.WS_FORMATO;

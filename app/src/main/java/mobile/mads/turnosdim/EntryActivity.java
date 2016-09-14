@@ -34,7 +34,9 @@ public class EntryActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DBManager db;
     private String dni;
+    private String pwd;
     private TextView resetPwdBtn;
+    private TextView registeredUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class EntryActivity extends AppCompatActivity {
         passTxt=(EditText)findViewById(R.id.loginPassword);
         newUserBtn=(Button)findViewById(R.id.newUserBtn);
         resetPwdBtn=(TextView)findViewById(R.id.resetPwdBtn);
+        registeredUser=(TextView)findViewById(R.id.registeredUser);
 
         // Inicializo la DB
         db = new DBManager(getApplicationContext());
@@ -68,10 +71,12 @@ public class EntryActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
                 url = WSConstants.StringConstants.WS_URL+WSConstants.StringConstants.WS_COMANDO_LOGIN+
                         WSConstants.StringConstants.WS_DNI+dniTxt.getText()+WSConstants.StringConstants.WS_PASS+
                         passTxt.getText()+WSConstants.StringConstants.WS_FORMATO;
                 dni = dniTxt.getText().toString();
+                pwd = passTxt.getText().toString();
                 new HttpRequestTask().execute();
 
             }
@@ -90,6 +95,13 @@ public class EntryActivity extends AppCompatActivity {
                 Intent i = new Intent(EntryActivity.this,ResetPwdActivity.class);
                 startActivity(i);
 
+            }
+        });
+        registeredUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(EntryActivity.this,UsuariosRegistradosActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -139,8 +151,10 @@ public class EntryActivity extends AppCompatActivity {
                             }*/
 
 
-
-
+                            UsuariosStruct user = db.getUsuarioPorDNI(dni);
+                            if(user==null){
+                                db.guardarUsuario(dni,pwd,paciente.getNombre().toString());
+                            }
                             db.newEntry(paciente);
                             return success;
                         } else  {

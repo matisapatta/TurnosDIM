@@ -64,16 +64,19 @@ public class DBManager extends Observable {
         return list;
     }
 
-    public boolean getUsuarioPorDNI(String dni){
+    public UsuariosStruct getUsuarioPorDNI(String dni){
         UsuariosStruct o = null;
-        String selectQuery = "SELECT * FROM " + DBLayout.DBConstants.USUARIOS_TABLE;
+        String selectQuery = "SELECT * FROM " + DBLayout.DBConstants.USUARIOS_TABLE + " WHERE " +
+                DBLayout.DBConstants.USUARIOS_TABLE_DNI + " = " + dni;
         SQLiteDatabase db = b.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        if (cursor.moveToFirst()) {
+            o = new UsuariosStruct(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        }
 
         cursor.close();
         b.close();
-        return false;
+        return o;
     }
 
 
