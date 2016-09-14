@@ -45,7 +45,8 @@
                         android:id="@+id/contentMedico"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -63,7 +64,8 @@
                         android:id="@+id/contentEspecialidad"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -81,7 +83,8 @@
                         android:id="@+id/contentFecha"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -99,7 +102,8 @@
                         android:id="@+id/contentCentro"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -117,7 +121,8 @@
                         android:id="@+id/contentConsultorio"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -135,7 +140,8 @@
                         android:id="@+id/contentCobertura"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
 
                 </TableRow>
                 <TableRow
@@ -154,7 +160,8 @@
                         android:id="@+id/contentPreparacion"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
                 <TableRow
                     android:layout_marginBottom="10dp">
@@ -170,7 +177,8 @@
                         android:layout_height="36dp"
                         android:paddingLeft="5dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/background_detalleturno"/>
+                        android:background="@drawable/background_detalleturno"
+                        android:layout_weight="1"/>
                 </TableRow>
 
             </TableLayout>

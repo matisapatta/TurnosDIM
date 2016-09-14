@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollViewMain"
         app:layout_constraintLeft_toLeftOf="@+id/fragmentMain">
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,10 +49,9 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintRight_toRightOf="@+id/fragmentNuevaPractica"
                 android:layout_marginRight="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/fragmentNuevaPractica"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/btnBuscarPractica">
+                app:layout_constraintTop_toBottomOf="@+id/btnBuscarPractica"
+                android:overScrollMode="never">
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>

@@ -1,4 +1,9 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollViewNuevaPractica">
+
+<android.support.constraint.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragmentNuevaPractica"
@@ -86,7 +91,7 @@
         android:id="@+id/nuevaPracticaRecView"
         android:scrollbars="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="200dp"
         android:gravity="center"
 
         android:layout_marginStart="16dp"
@@ -96,14 +101,14 @@
         app:layout_constraintRight_toRightOf="@+id/fragmentNuevaPractica"
         android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/fragmentNuevaPractica"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/btnBuscarPractica">
 
     </android.support.v7.widget.RecyclerView>
 
     <EditText
-        android:layout_width="359dp"
+        android:layout_width="match_parent"
         android:layout_height="39dp"
         android:inputType="textPersonName"
         android:text=""
@@ -121,3 +126,4 @@
 
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
