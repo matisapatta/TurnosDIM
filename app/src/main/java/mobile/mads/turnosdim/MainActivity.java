@@ -115,6 +115,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if (lastMenu != null)
+            lastMenu.setChecked(false);
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -132,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         if (id == R.id.action_home) {
             selectedFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_main, selectedFragment).commit();
+                    .replace(R.id.content_main, selectedFragment,"main_screen").commit();
 
             setTitle(getString(R.string.title_activity_main));
             if (lastMenu != null)
