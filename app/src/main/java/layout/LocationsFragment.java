@@ -4,7 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -156,14 +159,21 @@ public class LocationsFragment extends Fragment implements OnMapReadyCallback {
 //DO WHATEVER YOU WANT WITH GOOGLEMAP
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        map.getUiSettings().setMyLocationButtonEnabled(false);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         }
-        map.setMyLocationEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    123);
+
+        }
+
+        //map.setMyLocationEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
         //MapsInitializer.initialize(this.getActivity());
 
@@ -223,6 +233,20 @@ public class LocationsFragment extends Fragment implements OnMapReadyCallback {
         //map.animateCamera(cameraUpdate);
         LatLng temp = new LatLng(-34.644650,-58.591259);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(temp,13));
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 123) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+
+            } else {
+                // User refused to grant permission.
+            }
+        }
     }
 }
 
